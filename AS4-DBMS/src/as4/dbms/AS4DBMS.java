@@ -1,6 +1,11 @@
 package as4.dbms;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Scanner;
 
 public class AS4DBMS {
@@ -12,44 +17,58 @@ public class AS4DBMS {
         //Database:
         String user = "jordan";
         String password = "";
-        Connection conn = DriverManager.getConnection(DB_URL, user, password);
-        
-        //Input:
-        Scanner scanner = new Scanner(System.in);
-        int userChoice = -1;
-        while(true) {
-            System.out.println("What do you want to do?");
-            System.out.println("1. Add a customer");
-            System.out.println("2. Add an order");
-            System.out.println("3. Remove an order");
-            System.out.println("4. Ship an order");
-            System.out.println("5. Print pending order list");
-            System.out.println("6. Restock parts");
-            System.out.println("7. Exit");
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(DB_URL, user, password);
             
-            userChoice = scanner.nextInt();
-            
-            switch(userChoice) {
-                case 1:
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4: 
-                    break;
-                case 5: 
-                    break;
-                case 6: 
-                    break;
-                case 7:
-                    return;
-                default:
-                    System.out.println("Please pick a number from the menu.");
-                    break;
-                    
-            }
-            
+            //Input:
+            Scanner scanner = new Scanner(System.in);
+            int userChoice = 0;
+            while(true) {
+                System.out.println("What do you want to do?");
+                System.out.println("1. Add a customer");
+                System.out.println("2. Add an order");
+                System.out.println("3. Remove an order");
+                System.out.println("4. Ship an order");
+                System.out.println("5. Print pending order list");
+                System.out.println("6. Restock parts");
+                System.out.println("7. Exit");
+                System.out.print("--> ");
+                String stringUserChoice = scanner.next();
+
+                try {
+                    userChoice = Integer.parseInt(stringUserChoice.trim());
+                    switch(userChoice) {
+                        case 1:
+                            addACustomer(conn);
+                            break;
+                        case 2:
+                            addAnOrder(conn);
+                            break;
+                        case 3:
+                            removeAnOrder(conn);
+                            break;
+                        case 4: 
+                            shipAnOrder(conn);
+                            break;
+                        case 5: 
+                            printPending(conn);
+                            break;
+                        case 6: 
+                            restockParts(conn);
+                            break;
+                        case 7:
+                            return;
+                        default:
+                            System.out.println("\nPlease pick a number from the menu.");
+                            break;  
+                    }
+                } catch(Exception e) {
+                    System.out.println("\nError! Please enter an integer...");
+                }
+            } //end while loop
+        } catch(Exception e) {
+            System.out.println("\nError on connection! Has the DB been started? Message: " + e.getMessage());
         }
     }
     
@@ -102,4 +121,27 @@ public class AS4DBMS {
         return size;
     }
     
+    public static void addACustomer(Connection conn) {
+        
+    }
+    
+    public static void addAnOrder(Connection conn) {
+        
+    }
+    
+    public static void removeAnOrder(Connection conn) {
+        
+    }
+    
+    public static void shipAnOrder(Connection conn) {
+        
+    }
+    
+    public static void printPending(Connection conn) {
+        
+    }
+    
+    public static void restockParts(Connection conn) {
+        
+    }
 }
