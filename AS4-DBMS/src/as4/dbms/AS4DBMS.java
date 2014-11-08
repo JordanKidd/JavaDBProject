@@ -11,6 +11,7 @@ import java.util.Scanner;
 public class AS4DBMS {
     
     static final String DB_URL = "jdbc:mysql://localhost/lab2";
+    static Scanner scanner;
 
     public static void main(String[] args) throws SQLException {
         
@@ -22,7 +23,7 @@ public class AS4DBMS {
             conn = DriverManager.getConnection(DB_URL, user, password);
             
             //Input:
-            Scanner scanner = new Scanner(System.in);
+            scanner = new Scanner(System.in);
             int userChoice = 0;
             while(true) {
                 System.out.println("What do you want to do?");
@@ -58,6 +59,7 @@ public class AS4DBMS {
                             restockParts(conn);
                             break;
                         case 7:
+                            System.out.println("\nGoodbye.");
                             return;
                         default:
                             System.out.println("\nPlease pick a number from the menu.");
@@ -85,7 +87,7 @@ public class AS4DBMS {
                     columnHeadings += meta.getColumnName(i) + ",";
                 }
                 
-                String[] returned = new String[getResultSetSize(rs)];
+                String[] returned = new String[getResultSetRowCount(rs)];
                 String row = "";
                 while (rs.next()) {
                     int count = 0;
@@ -108,7 +110,7 @@ public class AS4DBMS {
         }
     }
     
-    public static int getResultSetSize(ResultSet rs){ 
+    public static int getResultSetRowCount(ResultSet rs){ 
         int size = 0;
         try {
             rs.last();
@@ -122,7 +124,25 @@ public class AS4DBMS {
     }
     
     public static void addACustomer(Connection conn) {
-        
+        try {
+            System.out.println("Please enter a customer name:");
+            scanner.nextLine();
+            String customerName = scanner.nextLine();
+            System.out.println("Please enter a customer street:");
+            String customerStreet = scanner.nextLine();
+            System.out.println("Please enter a customer zip:");
+            String customerZip = scanner.nextLine();
+            System.out.println("Please enter a customer phone number:");
+            String customerNumber = scanner.nextLine();
+
+            String sql = String.format("INSERT INTO customers (cname, street, zip, phone) VALUES ('%s','%s','%s','%s');", customerName, customerStreet, customerZip, customerNumber);
+            Statement stmt = conn.createStatement();
+            int result = stmt.executeUpdate(sql);
+
+
+        } catch (Exception e) {
+            System.out.println("\n error in addACustomer(). " + e.getMessage());
+        }
     }
     
     public static void addAnOrder(Connection conn) {
