@@ -187,12 +187,12 @@ public class AS4DBMS {
         try {
             System.out.println("Please enter an unique order number to ship:");
             scanner.nextLine();
-            String orderToRemove = scanner.nextLine();
+            String orderToShip = scanner.nextLine();
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date now = new Date();
             String dateTime = dateFormat.format(now);
             
-            String sql = String.format("UPDATE orders SET shipped = '%s' WHERE ono='%s';", dateTime, orderToRemove);
+            String sql = String.format("UPDATE orders SET shipped = '%s' WHERE ono='%s';", dateTime, orderToShip);
             Statement stmt = conn.createStatement();
             int result = stmt.executeUpdate(sql);
 
@@ -202,7 +202,43 @@ public class AS4DBMS {
     }
     
     public static void printPending(Connection conn) {
-        
+         String sql = "SELECT * FROM orders WHERE shipped is NULL;";
+        try {
+            Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = stmt.executeQuery(sql);      //exec statement -> table (rs)
+            ResultSetMetaData meta = rs.getMetaData();
+            int colCount = meta.getColumnCount();       //Column count 
+            String columnHeadings = "";
+            try  {
+                for(int i = 1; i < colCount + 1; i++) {
+                    if(i < 4)
+                        columnHeadings += meta.getColumnName(i) + ",\t";
+                    else
+                        columnHeadings += meta.getColumnName(i) + ",\t\t";
+                }
+                System.out.println(columnHeadings);
+                String row = "";
+                while (rs.next()) {
+                    int count = 0;
+                    for(int i = 1; i < colCount + 1; i++) {
+                        if (i < 4)
+                            row += rs.getString(i) + ",\t";
+                        else
+                            row += rs.getString(i) + ",\t\t";
+                    }
+                    System.out.println(row);
+                    count++;
+                    row = "";
+                }
+            } finally {
+              rs.close();
+            }
+            System.out.println();
+            stmt.close();    
+        }
+        catch (SQLException ex) {
+            System.out.println("\n!--- Error on printPending()! " + ex.getMessage());
+        }
     }
     
     public static void restockParts(Connection conn) {
