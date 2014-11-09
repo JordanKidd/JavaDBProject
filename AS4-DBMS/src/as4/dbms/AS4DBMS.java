@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class AS4DBMS {
@@ -140,7 +143,7 @@ public class AS4DBMS {
             int result = stmt.executeUpdate(sql);
 
         } catch (Exception e) {
-            System.out.println("\n error in addACustomer(). " + e.getMessage());
+            System.out.println("\n!--- Error in addACustomer(). " + e.getMessage());
         }
     }
     
@@ -151,17 +154,17 @@ public class AS4DBMS {
             String customerNum = scanner.nextLine();
             System.out.println("Please enter an employee number:");
             String employeeNum = scanner.nextLine();
-            System.out.println("Please enter a received date:");
-            String rec = scanner.nextLine();
-            System.out.println("Please enter a shipped date:");
-            String shipped = scanner.nextLine();
-
-            String sql = String.format("INSERT INTO orders(cno, eno, received, shipped) VALUES('%s','%s','%s','%s');", customerNum, employeeNum, rec, shipped);
+            
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            Date now = new Date();
+            String dateTime = dateFormat.format(now);
+            
+            String sql = String.format("INSERT INTO orders(cno, eno, received) VALUES('%s','%s','%s');", customerNum, employeeNum, dateTime);
             Statement stmt = conn.createStatement();
             int result = stmt.executeUpdate(sql);
 
         } catch (Exception e) {
-            System.out.println("\n error in addAnOrder(). " + e.getMessage());
+            System.out.println("\n!--- Error in addAnOrder(). " + e.getMessage());
         }
     }
     
@@ -176,12 +179,26 @@ public class AS4DBMS {
             int result = stmt.executeUpdate(sql);
 
         } catch (Exception e) {
-            System.out.println("\n error in addAnOrder(). " + e.getMessage());
+            System.out.println("\n!--- Error in removeAnOrder(). " + e.getMessage());
         }
     }
     
     public static void shipAnOrder(Connection conn) {
-        
+        try {
+            System.out.println("Please enter an unique order number to ship:");
+            scanner.nextLine();
+            String orderToRemove = scanner.nextLine();
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            Date now = new Date();
+            String dateTime = dateFormat.format(now);
+            
+            String sql = String.format("UPDATE orders SET shipped = '%s' WHERE ono='%s';", dateTime, orderToRemove);
+            Statement stmt = conn.createStatement();
+            int result = stmt.executeUpdate(sql);
+
+        } catch (Exception e) {
+            System.out.println("\n!--- Error in shipAnOrder(). " + e.getMessage());
+        }
     }
     
     public static void printPending(Connection conn) {
