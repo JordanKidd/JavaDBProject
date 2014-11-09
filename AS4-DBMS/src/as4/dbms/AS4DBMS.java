@@ -139,14 +139,30 @@ public class AS4DBMS {
             Statement stmt = conn.createStatement();
             int result = stmt.executeUpdate(sql);
 
-
         } catch (Exception e) {
             System.out.println("\n error in addACustomer(). " + e.getMessage());
         }
     }
     
     public static void addAnOrder(Connection conn) {
-        
+        try {
+            System.out.println("Please enter a customer number:");
+            scanner.nextLine();
+            String customerNum = scanner.nextLine();
+            System.out.println("Please enter an employee number:");
+            String employeeNum = scanner.nextLine();
+            System.out.println("Please enter a received date:");
+            String rec = scanner.nextLine();
+            System.out.println("Please enter a shipped date:");
+            String shipped = scanner.nextLine();
+
+            String sql = String.format("INSERT INTO orders(cno, eno, received, shipped) VALUES('%s','%s','%s','%s');", customerNum, employeeNum, rec, shipped);
+            Statement stmt = conn.createStatement();
+            int result = stmt.executeUpdate(sql);
+
+        } catch (Exception e) {
+            System.out.println("\n error in addAnOrder(). " + e.getMessage());
+        }
     }
     
     public static void removeAnOrder(Connection conn) {
