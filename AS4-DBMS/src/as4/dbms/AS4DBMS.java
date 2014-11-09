@@ -166,7 +166,18 @@ public class AS4DBMS {
     }
     
     public static void removeAnOrder(Connection conn) {
-        
+        try {
+            System.out.println("Please enter an order number to delete:");
+            scanner.nextLine();
+            String orderToRemove = scanner.nextLine();
+            
+            String sql = String.format("DELETE FROM orders WHERE ono='%s';", orderToRemove);
+            Statement stmt = conn.createStatement();
+            int result = stmt.executeUpdate(sql);
+
+        } catch (Exception e) {
+            System.out.println("\n error in addAnOrder(). " + e.getMessage());
+        }
     }
     
     public static void shipAnOrder(Connection conn) {
