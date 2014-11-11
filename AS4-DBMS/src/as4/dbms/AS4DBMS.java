@@ -169,11 +169,7 @@ public class AS4DBMS {
             System.out.println("Please enter an employee number:");
             String employeeNum = scanner.nextLine();
             
-            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            Date now = new Date();
-            String dateTime = dateFormat.format(now);
-            
-            String sql = String.format("INSERT INTO orders(cno, eno, received) VALUES('%s','%s','%s');", customerNum, employeeNum, dateTime);
+            String sql = String.format("INSERT INTO orders(cno, eno) VALUES('%s','%s');", customerNum, employeeNum);
             //String sql2 = String.format("INSERT INTO order_line() VALUES('%s', '%s')");, );
             Statement stmt = conn.createStatement();
             int result = stmt.executeUpdate(sql);
@@ -225,27 +221,34 @@ public class AS4DBMS {
             int colCount = meta.getColumnCount();       //Column count 
             String columnHeadings = "";
             try  {
-                for(int i = 1; i < colCount + 1; i++) {
-                    if(i < 4)
+                for(int i = 1; i < colCount; i++) {
+                    if(i < 4) {
                         columnHeadings += meta.getColumnName(i) + ",\t";
-                    else
-                        columnHeadings += meta.getColumnName(i) + ",\t\t";
+                    } else {
+                        columnHeadings += meta.getColumnName(i) + "\t\t";
+                    }
                 }
                 System.out.println(columnHeadings);
                 String row = "";
                 while (rs.next()) {
                     int count = 0;
-                    for(int i = 1; i < colCount + 1; i++) {
+                    String customerNum = "";
+                    for(int i = 1; i < colCount; i++) {
+                        if (i == 2) {
+                           customerNum = rs.getString(i);
+                        }
                         if (i < 4) {
                             row += rs.getString(i) + ",\t";
                         } else {
-                            row += rs.getString(i) + ",\t\t";
+                            row += rs.getString(i) + "\t\t";
                         }
                     }
                     System.out.println(row);
+                    printCustomerInfo(conn, customerNum);
                     count++;
                     row = "";
                 }
+                
             } finally {
               rs.close();
             }
@@ -255,6 +258,45 @@ public class AS4DBMS {
         catch (SQLException ex) {
             System.out.println("\n!--- Error on printPending()! " + ex.getMessage());
         }
+    }
+    
+    public static void printCustomerInfo(Connection conn, String customer) {
+        
+        String sql = String.format("SELECT * FROM customers WHERE cno='%s';", customer);
+        try {
+            Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = stmt.executeQuery(sql);      //exec statement -> table (rs)
+            ResultSetMetaData meta = rs.getMetaData();
+            int colCount = meta.getColumnCount();       //Column count 
+            
+            String columnHeadings = "";
+            for(int i = 1; i < colCount; i++) {
+                    if(i < 4) {
+                        columnHeadings += "\t" + meta.getColumnName(i) + "\t";
+                    } else {
+                        columnHeadings += "\t" + meta.getColumnName(i) + "\t";
+                    }
+                }
+                System.out.println(columnHeadings);
+                String row = "";
+                while (rs.next()) {
+                    int count = 0;
+                    for(int i = 1; i < colCount; i++) {
+                        if (i < 4) {
+                            row += "\t" + rs.getString(i) + "\t";
+                        } else {
+                            row += "\t"+ rs.getString(i) + "\t";
+                        }
+                    }
+                    System.out.println(row);
+                    count++;
+                    row = "";
+                }
+
+        } catch(Exception ex) {
+            System.out.println("\n!--- Error on printCustomerInfo()! " + ex.getMessage());
+        }
+        
     }
     
     public static void restockParts(Connection conn) {
