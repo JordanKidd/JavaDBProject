@@ -135,12 +135,26 @@ public class AS4DBMS {
             String customerStreet = scanner.nextLine();
             System.out.println("Please enter a customer zip:");
             String customerZip = scanner.nextLine();
+            
+            String zipCheck = String.format("SELECT * FROM zipcodes WHERE zip='%s'", customerZip);
+            Statement stmt1 = conn.createStatement();
+            ResultSet rs = stmt1.executeQuery(zipCheck);
+
+            if (getResultSetRowCount(rs) == 0) {
+                //no zip found
+                System.out.println("Please enter a city name for the new zipcode:");
+                String zipCityName = scanner.nextLine();
+                String sql3 = String.format("INSERT INTO zipcodes(zip, city) VALUES ('%s','%s');", customerZip, zipCityName);
+                Statement stmt3 = conn.createStatement();
+                int result3 = stmt3.executeUpdate(sql3);
+            } 
+            
             System.out.println("Please enter a customer phone number:");
             String customerNumber = scanner.nextLine();
 
             String sql = String.format("INSERT INTO customers (cname, street, zip, phone) VALUES ('%s','%s','%s','%s');", customerName, customerStreet, customerZip, customerNumber);
-            Statement stmt = conn.createStatement();
-            int result = stmt.executeUpdate(sql);
+            Statement stmt2 = conn.createStatement();
+            int result2 = stmt2.executeUpdate(sql);
 
         } catch (Exception e) {
             System.out.println("\n!--- Error in addACustomer(). " + e.getMessage());
@@ -160,6 +174,7 @@ public class AS4DBMS {
             String dateTime = dateFormat.format(now);
             
             String sql = String.format("INSERT INTO orders(cno, eno, received) VALUES('%s','%s','%s');", customerNum, employeeNum, dateTime);
+            //String sql2 = String.format("INSERT INTO order_line() VALUES('%s', '%s')");, );
             Statement stmt = conn.createStatement();
             int result = stmt.executeUpdate(sql);
 
@@ -202,7 +217,7 @@ public class AS4DBMS {
     }
     
     public static void printPending(Connection conn) {
-         String sql = "SELECT * FROM orders WHERE shipped is NULL;";
+        String sql = "SELECT * FROM orders WHERE shipped is NULL;";
         try {
             Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = stmt.executeQuery(sql);      //exec statement -> table (rs)
@@ -221,10 +236,11 @@ public class AS4DBMS {
                 while (rs.next()) {
                     int count = 0;
                     for(int i = 1; i < colCount + 1; i++) {
-                        if (i < 4)
+                        if (i < 4) {
                             row += rs.getString(i) + ",\t";
-                        else
+                        } else {
                             row += rs.getString(i) + ",\t\t";
+                        }
                     }
                     System.out.println(row);
                     count++;
