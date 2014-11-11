@@ -168,12 +168,37 @@ public class AS4DBMS {
             String customerNum = scanner.nextLine();
             System.out.println("Please enter an employee number:");
             String employeeNum = scanner.nextLine();
+            System.out.println("Please enter a part number for the order: ");
+            String partNum = scanner.nextLine();
             
             String sql = String.format("INSERT INTO orders(cno, eno) VALUES('%s','%s');", customerNum, employeeNum);
-            //String sql2 = String.format("INSERT INTO order_line() VALUES('%s', '%s')");, );
             Statement stmt = conn.createStatement();
             int result = stmt.executeUpdate(sql);
-
+            
+            sql = String.format("SELECT * FROM orders WHERE cno='%s' AND eno='%s';", customerNum, employeeNum);
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            
+            ResultSetMetaData meta = rs.getMetaData();
+            int colCount = meta.getColumnCount(); 
+            String ono = "";
+             while (rs.next()) {
+                for(int i = 1; i < colCount; i++) {
+                    if (i == 1) {
+                       ono = rs.getString(i);
+                    }
+                }
+            }
+             
+            System.out.println("Ono is: " + ono);
+             
+            System.out.println("Quantity requested:");
+            String qty = scanner.nextLine();
+            
+            sql = String.format("INSERT INTO order_line(ono, pno, qty) VALUES('%s','%s','%s');", ono, partNum, qty);
+            stmt = conn.createStatement();
+            result = stmt.executeUpdate(sql);
+            
         } catch (Exception e) {
             System.out.println("\n!--- Error in addAnOrder(). " + e.getMessage());
         }
