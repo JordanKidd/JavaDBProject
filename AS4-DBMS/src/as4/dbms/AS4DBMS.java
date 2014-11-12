@@ -16,12 +16,14 @@ public class AS4DBMS {
     static final String DB_URL = "jdbc:mysql://localhost/lab2";
     static Scanner scanner;
 
+    
     public static void main(String[] args) throws SQLException {
         
-        //Database:
+        //CHANGE TO ROOT / ROOT:
         String user = "jordan";
         String password = "";
-        Connection conn = null;
+        Connection conn;
+        
         try {
             conn = DriverManager.getConnection(DB_URL, user, password);
             
@@ -29,7 +31,7 @@ public class AS4DBMS {
             scanner = new Scanner(System.in);
             int userChoice = 0;
             while(true) {
-                System.out.println("What do you want to do?");
+                System.out.println("\nWhat do you want to do?");
                 System.out.println("1. Add a customer");
                 System.out.println("2. Add an order");
                 System.out.println("3. Remove an order");
@@ -77,41 +79,6 @@ public class AS4DBMS {
         }
     }
     
-    public static void runSelect(Connection conn) {
-        String sql = "select * from customers;";
-        try {
-            Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ResultSet rs = stmt.executeQuery(sql);      //exec statement -> table (rs)
-            ResultSetMetaData meta = rs.getMetaData();
-            int colCount = meta.getColumnCount();       //Column count 
-            String columnHeadings = "";
-            try  {
-                for(int i = 1; i < colCount+1; i++) {
-                    columnHeadings += meta.getColumnName(i) + ",";
-                }
-                
-                String[] returned = new String[getResultSetRowCount(rs)];
-                String row = "";
-                while (rs.next()) {
-                    int count = 0;
-                    for(int i = 1; i < colCount + 1; i++) {
-                        row += rs.getString(i) + ",";
-                    }
-                    returned[count] = row;
-                    count++;
-                    row = "";
-                }
-            } finally {
-              rs.close();
-            }
-            System.out.println();
-            stmt.close();    
-        }
-        catch (SQLException ex) {
-            System.out.println("ERROR ON SELECT STATEMENT!");
-            System.out.println(ex.toString());
-        }
-    }
     
     public static int getResultSetRowCount(ResultSet rs){ 
         int size = 0;
@@ -125,6 +92,7 @@ public class AS4DBMS {
         }
         return size;
     }
+    
     
     public static void addACustomer(Connection conn) {
         try {
@@ -160,6 +128,7 @@ public class AS4DBMS {
             System.out.println("\n!--- Error in addACustomer(). " + e.getMessage());
         }
     }
+    
     
     public static void addAnOrder(Connection conn) {
         try {
@@ -204,20 +173,39 @@ public class AS4DBMS {
         }
     }
     
+    
     public static void removeAnOrder(Connection conn) {
         try {
             System.out.println("Please enter an order number to delete:");
             scanner.nextLine();
             String orderToRemove = scanner.nextLine();
             
-            String sql = String.format("DELETE FROM orders WHERE ono='%s';", orderToRemove);
+            String sql = String.format("SELECT qty FROM order_line WHERE ono='%s'", orderToRemove);
             Statement stmt = conn.createStatement();
-            int result = stmt.executeUpdate(sql);
+            ResultSet rs = stmt.executeQuery(sql);
+            
+            String qty = "";
+            while (rs.next()) {
+                for(int i = 1; i < rs.getMetaData().getColumnCount() + 1; i++) {
+                    qty = rs.getString(i);
+                }
+            }
+            
+            //CALL TO RESTOCK HERE!!? qty has amount to adjust ono by (+ value, add order is - value)
+            
+            sql = String.format("DELETE FROM order_line WHERE ono='%s'", orderToRemove);
+            stmt = conn.createStatement();
+            int numResult = stmt.executeUpdate(sql);
+            
+            sql = String.format("DELETE FROM orders WHERE ono='%s';", orderToRemove);
+            stmt = conn.createStatement();
+            numResult = stmt.executeUpdate(sql);
 
         } catch (Exception e) {
             System.out.println("\n!--- Error in removeAnOrder(). " + e.getMessage());
         }
     }
+    
     
     public static void shipAnOrder(Connection conn) {
         try {
@@ -236,6 +224,7 @@ public class AS4DBMS {
             System.out.println("\n!--- Error in shipAnOrder(). " + e.getMessage());
         }
     }
+    
     
     public static void printPending(Connection conn) {
         String sql = "SELECT * FROM orders WHERE shipped is NULL;";
@@ -285,14 +274,15 @@ public class AS4DBMS {
         }
     }
     
+    
     public static void printCustomerInfo(Connection conn, String customer) {
         
         String sql = String.format("SELECT * FROM customers WHERE cno='%s';", customer);
         try {
             Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ResultSet rs = stmt.executeQuery(sql);      //exec statement -> table (rs)
+            ResultSet rs = stmt.executeQuery(sql);      
             ResultSetMetaData meta = rs.getMetaData();
-            int colCount = meta.getColumnCount();       //Column count 
+            int colCount = meta.getColumnCount();       
             
             String columnHeadings = "";
             for(int i = 1; i < colCount; i++) {
@@ -323,6 +313,7 @@ public class AS4DBMS {
         }
         
     }
+    
     
     public static void restockParts(Connection conn) {
         
