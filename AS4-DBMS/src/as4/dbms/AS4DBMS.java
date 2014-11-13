@@ -15,7 +15,6 @@ public class AS4DBMS {
     
     static final String DB_URL = "jdbc:mysql://localhost/lab2";
     static Scanner scanner;
-
     
     public static void main(String[] args) throws SQLException {
         
@@ -94,6 +93,9 @@ public class AS4DBMS {
     }
     
     
+    /*  When enter a new customer:
+        CNO should be automatically generated. (e.g. the biggest existing number + 1).
+        ZIP should exist in ZIPCODES table. If not, add the entry into ZIPCODES by asking for CITY. */
     public static void addACustomer(Connection conn) {
         try {
             System.out.println("Please enter a customer name:");
@@ -130,6 +132,13 @@ public class AS4DBMS {
     }
     
     
+    /*
+    When add an order:
+    Add to both ORDERS and ORDER_LINE. ONO and RECEIVED should be automatically filled.
+    Pay attention to the foreign key constraints on CNO, ENO and PNO.
+    Update the part's QUANTITY_ON_HAND.
+    The order should be rejected if it makes the updated QUANTITY_ON_HAND  < 0.
+    */
     public static void addAnOrder(Connection conn) {
         try {
             System.out.println("Please enter a customer number:");
@@ -174,6 +183,10 @@ public class AS4DBMS {
     }
     
     
+    /* When remove an order:
+    Delete the entry in both the ORDER and the ORDER_LINE tables. 
+    However, your code should only have to deal with the ORDER table, the DBMS should handle the ORDER_LINE table automatically.
+    NEVER forget to restock parts (update the QUANTITY_ON_HAND attribute) */
     public static void removeAnOrder(Connection conn) {
         try {
             System.out.println("Please enter an order number to delete:");
@@ -226,8 +239,11 @@ public class AS4DBMS {
     }
     
     
+     /* When printing pending order list:
+        Print only pending orders (i.e. orders have not been shipped).
+        Print them in the order of received time. */
     public static void printPending(Connection conn) {
-        String sql = "SELECT * FROM orders WHERE shipped is NULL;";
+        String sql = "SELECT * FROM orders WHERE shipped is NULL ORDER BY received;";
         try {
             Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = stmt.executeQuery(sql);      //exec statement -> table (rs)
@@ -235,16 +251,20 @@ public class AS4DBMS {
             int colCount = meta.getColumnCount();       //Column count 
             String columnHeadings = "";
             try  {
-                for(int i = 1; i < colCount; i++) {
-                    if(i < 4) {
-                        columnHeadings += meta.getColumnName(i) + ",\t";
-                    } else {
-                        columnHeadings += meta.getColumnName(i) + "\t\t";
-                    }
-                }
-                System.out.println(columnHeadings);
                 String row = "";
+                
                 while (rs.next()) {
+                    System.out.println("----Pending Order-----");
+                    for(int i = 1; i < colCount; i++) {
+                        if(i < 4) {
+                            columnHeadings += meta.getColumnName(i) + ",\t";
+                        } else {
+                            columnHeadings += meta.getColumnName(i) + "\t\t";
+                        }
+                    }
+                    System.out.println(columnHeadings);
+                    columnHeadings = "";
+                    
                     int count = 0;
                     String customerNum = "";
                     for(int i = 1; i < colCount; i++) {
@@ -258,7 +278,9 @@ public class AS4DBMS {
                         }
                     }
                     System.out.println(row);
+                    System.out.println("-----Customer-----");
                     printCustomerInfo(conn, customerNum);
+                    System.out.println(); //for order and customer spacing
                     count++;
                     row = "";
                 }
@@ -287,9 +309,9 @@ public class AS4DBMS {
             String columnHeadings = "";
             for(int i = 1; i < colCount; i++) {
                     if(i < 4) {
-                        columnHeadings += "\t" + meta.getColumnName(i) + "\t";
+                        columnHeadings += meta.getColumnName(i) + "\t";
                     } else {
-                        columnHeadings += "\t" + meta.getColumnName(i) + "\t";
+                        columnHeadings += meta.getColumnName(i) + "\t";
                     }
                 }
                 System.out.println(columnHeadings);
@@ -298,9 +320,9 @@ public class AS4DBMS {
                     int count = 0;
                     for(int i = 1; i < colCount; i++) {
                         if (i < 4) {
-                            row += "\t" + rs.getString(i) + "\t";
+                            row += rs.getString(i) + "\t";
                         } else {
-                            row += "\t"+ rs.getString(i) + "\t";
+                            row += rs.getString(i) + "\t";
                         }
                     }
                     System.out.println(row);
