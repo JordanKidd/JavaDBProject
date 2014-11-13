@@ -160,7 +160,7 @@ public class AS4DBMS {
             ResultSetMetaData meta = rs.getMetaData();
             int colCount = meta.getColumnCount(); 
             String ono = "";
-             while (rs.next()) {
+            while (rs.next()) {
                 for(int i = 1; i < colCount; i++) {
                     if (i == 1) {
                        ono = rs.getString(i);
@@ -168,14 +168,38 @@ public class AS4DBMS {
                 }
             }
              
-            System.out.println("Ono is: " + ono);
-             
             System.out.println("Quantity requested:");
             String qty = scanner.nextLine();
             
-            sql = String.format("INSERT INTO order_line(ono, pno, qty) VALUES('%s','%s','%s');", ono, partNum, qty);
+            String getQty = String.format("SELECT qoh FROM parts WHERE pno='%s';", partNum);
             stmt = conn.createStatement();
-            result = stmt.executeUpdate(sql);
+            ResultSet qtyRS = stmt.executeQuery(getQty);
+            meta = qtyRS.getMetaData();
+            colCount = meta.getColumnCount(); 
+            String qoh = "";
+            while (qtyRS.next()) {
+                for(int i = 1; i < colCount+1; i++) {
+                    qoh = qtyRS.getString(i);
+                }
+            }
+            
+            if(Integer.parseInt(qoh) >= Integer.parseInt(qty)) {
+                //OK
+                sql = String.format("INSERT INTO order_line(ono, pno, qty) VALUES('%s','%s','%s');", ono, partNum, qty);
+                stmt = conn.createStatement();
+                result = stmt.executeUpdate(sql);
+                
+                //UPDATE THE AMOUNT
+                
+                //END UPDATE
+            } else {
+                //Not enough qty
+                sql = String.format("DELETE FROM orders WHERE ono='%s';", ono);
+                stmt = conn.createStatement();
+                stmt.executeUpdate(sql);
+            
+                throw new Exception("Not enough parts in the store to order your quantity requested.");
+            }
             
         } catch (Exception e) {
             System.out.println("\n!--- Error in addAnOrder(). " + e.getMessage());
@@ -297,6 +321,7 @@ public class AS4DBMS {
     }
     
     
+    //Used in printPending()
     public static void printCustomerInfo(Connection conn, String customer) {
         
         String sql = String.format("SELECT * FROM customers WHERE cno='%s';", customer);
