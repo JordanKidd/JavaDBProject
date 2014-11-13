@@ -19,78 +19,66 @@ import java.util.Scanner;
 public class AS4DBMS {
 
     public static Scanner scanner =  new Scanner(System.in);
-    
+
 	public static void main(String[] args) throws SQLException {
-        
+
 		String user = "jordan";
 		String password = "";
-		Connection connection = null;
-        
+		Connection conn = null;
+
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost/lab2", user, password);
+			conn = DriverManager.getConnection("jdbc:mysql://localhost/lab2", user, password);
 			int userChoice = 0;
 			while(true) {
-				printMenu();
+
+                System.out.println("What do you want to do?");
+                System.out.println("1. Add a customer");
+                System.out.println("2. Add an order");
+                System.out.println("3. Remove an order");
+                System.out.println("4. Ship an order");
+                System.out.println("5. Print pending order list");
+                System.out.println("6. Restock parts");
+                System.out.println("7. Exit");
+                System.out.print("--> ");
+
 				String userChoiceString = scanner.next();
 				try {
 					userChoice = Integer.parseInt(userChoiceString.trim());
 					switch(userChoice) {
 					case 1:
-						addACustomer(connection);
+						addACustomer(conn);
 						break;
 					case 2:
-						addAnOrder(connection);
+						addAnOrder(conn);
 						break;
 					case 3:
-						removeAnOrder(connection);
+						removeAnOrder(conn);
 						break;
 					case 4:
-						shipAnOrder(connection);
+						shipAnOrder(conn);
 						break;
 					case 5:
-						printPending(connection);
+						printPending(conn);
 						break;
 					case 6:
-						restockParts(connection);
+						restockParts(conn);
 						break;
 					case 7:
 						System.out.println("\nGoodbye.");
 						return;
 					default:
-						System.out.println("\nPlease pick a number from the menu.");
+						System.out.println("\n!--- Please pick a number from the menu.");
 					}
 				} catch(Exception e) {
-					System.out.println("\nError! Please enter an integer...");
+					System.out.println("\n!---Error! Please enter an integer...");
 				}
 			}
 		} catch(Exception e) {
-			System.out.println("\nError on connection! Has the DB been started? Message: " + e.getMessage());
+			System.out.println("\n!--- Error! Has the DB been started? Message: " + e.getMessage());
 		}
 	}
 
-	/************************
-	 * METHOD: printMenu
-	 * @accessibility private
-	 */
-	private static void printMenu() {
-		System.out.println("---------------------------------------");
-		System.out.println("What do you want to do?");
-		System.out.println("1. Add a customer");
-		System.out.println("2. Add an order");
-		System.out.println("3. Remove an order");
-		System.out.println("4. Ship an order");
-		System.out.println("5. Print pending order list");
-		System.out.println("6. Restock parts");
-		System.out.println("7. Exit");
-		System.out.println("---------------------------------------");
-		System.out.print("--> ");
-	}
 
-	/******************************
-	 * METHOD: getResultSetRowCount
-	 * @accessibility private
-	 * @param rs
-	 */
 	private static int getResultSetRowCount(ResultSet rs) {
 		int size = 0;
 		try {
@@ -103,16 +91,11 @@ public class AS4DBMS {
 		return size;
 	}
 
-	/***************************
-	 * METHOD: printCustomerInfo
-	 * @accessibility private
-	 * @param connection
-	 * @param customer
-	 */
-	private static void printCustomerInfo(Connection connection, String customer) {
+
+	private static void printCustomerInfo(Connection conn, String customer) {
 		String sql = String.format("SELECT * FROM customers WHERE cno='%s';", customer);
 		try {
-			Statement stmt = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = stmt.executeQuery(sql);
 			ResultSetMetaData meta = rs.getMetaData();
 			int colCount = meta.getColumnCount();
@@ -144,12 +127,8 @@ public class AS4DBMS {
 		}
 	}
 
-	/************************
-	 * METHOD: addACustomer
-	 * @accessibility private
-	 * @param connection
-	 */
-	private static void addACustomer(Connection connection) {
+
+	private static void addACustomer(Connection conn) {
 		try {
 			System.out.println("Please enter a customer name: ");
 			scanner.nextLine();
@@ -159,31 +138,27 @@ public class AS4DBMS {
 			System.out.println("Please enter a customer zip: ");
 			String customerZIP = scanner.nextLine();
 			String customerZIPCheck = String.format("SELECT * FROM zipcodes WHERE zip='%s'", customerZIP);
-			Statement statement1 = connection.createStatement();
+			Statement statement1 = conn.createStatement();
 			ResultSet rs = statement1.executeQuery(customerZIPCheck);
 			if(getResultSetRowCount(rs) == 0) {
 				System.out.println("Please enter a city name for the new zipcode: ");
 				String zipCityName = scanner.nextLine();
 				String sql2 = String.format("INSERT INTO zipcodes(zip, city) VALUES ('%s','%s');", customerZIP, zipCityName);
-				Statement statement2 = connection.createStatement();
+				Statement statement2 = conn.createStatement();
 				statement2.executeUpdate(sql2);
 			}
 			System.out.println("Please enter a customer phone number: ");
 			String customerPhoneNumber = scanner.nextLine();
 			String sql3 = String.format("INSERT INTO customers (cname, street, zip, phone) VALUES ('%s','%s','%s','%s');", customerName, customerStreet, customerZIP, customerPhoneNumber);
-			Statement statement3 = connection.createStatement();
+			Statement statement3 = conn.createStatement();
 			statement3.executeUpdate(sql3);
 		} catch(Exception e) {
 			System.out.println("\n!--- Error in addACustomer(). " + e.getMessage());
 		}
 	}
 
-	/************************
-	 * METHOD: addAnOrder
-	 * @accessibility private
-	 * @param connection
-	 */
-	private static void addAnOrder(Connection connection) {
+
+	private static void addAnOrder(Connection conn) {
 		try {
 			System.out.println("Please enter a customer number:");
 			scanner.nextLine();
@@ -193,10 +168,10 @@ public class AS4DBMS {
 			System.out.println("Please enter a part number for the order: ");
 			String partNum = scanner.nextLine();
 			String sql = String.format("INSERT INTO orders(cno, eno) VALUES('%s','%s');", customerNum, employeeNum);
-			Statement stmt = connection.createStatement();
+			Statement stmt = conn.createStatement();
 			int result = stmt.executeUpdate(sql);
 			sql = String.format("SELECT * FROM orders WHERE cno='%s' AND eno='%s';", customerNum, employeeNum);
-			stmt = connection.createStatement();
+			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			ResultSetMetaData meta = rs.getMetaData();
 			int colCount = meta.getColumnCount();
@@ -211,7 +186,7 @@ public class AS4DBMS {
 			System.out.println("Quantity requested:");
 			String qty = scanner.nextLine();
 			String getQty = String.format("SELECT qoh FROM parts WHERE pno='%s';", partNum);
-			stmt = connection.createStatement();
+			stmt = conn.createStatement();
 			ResultSet qtyRS = stmt.executeQuery(getQty);
 			meta = qtyRS.getMetaData();
 			colCount = meta.getColumnCount();
@@ -224,15 +199,15 @@ public class AS4DBMS {
 			if(Integer.parseInt(qoh) >= Integer.parseInt(qty)) {
 				//OK
 				sql = String.format("INSERT INTO order_line(ono, pno, qty) VALUES('%s','%s','%s');", ono, partNum, qty);
-				stmt = connection.createStatement();
+				stmt = conn.createStatement();
 				result = stmt.executeUpdate(sql);
 				//UPDATE THE AMOUNT3
-                updateParts(connection, partNum, "-" + Integer.parseInt(qty));
+                updateParts(conn, partNum, "-" + Integer.parseInt(qty));
 				//END UPDATE
 			} else {
 				//Not enough qty
 				sql = String.format("DELETE FROM orders WHERE ono='%s';", ono);
-				stmt = connection.createStatement();
+				stmt = conn.createStatement();
 				stmt.executeUpdate(sql);
 				throw new Exception("Not enough parts in the store to order your quantity requested.");
 			}
@@ -241,18 +216,14 @@ public class AS4DBMS {
 		}
 	}
 
-	/************************
-	 * METHOD: removeAnOrder
-	 * @accessibility private
-	 * @param connection
-	 */
-	private static void removeAnOrder(Connection connection) {
+
+	private static void removeAnOrder(Connection conn) {
 		try {
 			System.out.println("Please enter an order number to delete: ");
 			scanner.nextLine();
 			String orderToRemove = scanner.nextLine();
 			String sql = String.format("SELECT qty FROM order_line WHERE ono='%s';", orderToRemove);
-			Statement statement = connection.createStatement();
+			Statement statement = conn.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
 			String quantity = "";
 			while(rs.next()) {
@@ -261,7 +232,7 @@ public class AS4DBMS {
 				}
 			}
 			sql = String.format("SELECT pno FROM order_line WHERE ono='%s'", orderToRemove);
-			statement = connection.createStatement();
+			statement = conn.createStatement();
 			rs = statement.executeQuery(sql);
 			String pno = "";
 			while(rs.next()) {
@@ -269,26 +240,22 @@ public class AS4DBMS {
 					pno = rs.getString(i);
 				}
 			}
-            
-			updateParts(connection, pno, quantity);
+
+			updateParts(conn, pno, quantity);
 			sql = String.format("DELETE FROM order_line WHERE ono='%s';", orderToRemove);
-			statement = connection.createStatement();
+			statement = conn.createStatement();
 			statement.executeUpdate(sql);
 			sql = String.format("DELETE FROM orders WHERE ono='%s';", orderToRemove);
-			statement = connection.createStatement();
+			statement = conn.createStatement();
 			statement.executeUpdate(sql);
-            
+
 		} catch(Exception e) {
 			System.out.println("\n!--- Error in removeAnOrder(). " + e.getMessage());
 		}
 	}
 
-	/************************
-	 * METHOD: shipAnOrder
-	 * @accessibility private
-	 * @param connection
-	 */
-	private static void shipAnOrder(Connection connection) {
+
+	private static void shipAnOrder(Connection conn) {
 		try {
 			System.out.println("Please enter a unique order number to ship: ");
 			scanner.nextLine();
@@ -297,22 +264,18 @@ public class AS4DBMS {
 			Date now = new Date();
 			String dateTime = dateFormat.format(now);
 			String sql = String.format("UPDATE orders SET shipped = '%s' WHERE ono='%s';", dateTime, orderToShip);
-			Statement statement = connection.createStatement();
+			Statement statement = conn.createStatement();
 			statement.executeUpdate(sql);
 		} catch(Exception e) {
 			System.out.println("\n!--- Error in shipAnOrder(). " + e.getMessage());
 		}
 	}
 
-	/************************
-	 * METHOD: printPending
-	 * @accessibility private
-	 * @param connection
-	 */
-	private static void printPending(Connection connection) {
+
+	private static void printPending(Connection conn) {
 		String sql = "SELECT * FROM orders WHERE shipped is NULL ORDER BY received;";
 		try {
-			Statement stmt = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = stmt.executeQuery(sql); //exec statement -> table (rs)
 			ResultSetMetaData meta = rs.getMetaData();
 			int colCount = meta.getColumnCount(); //Column count
@@ -344,7 +307,7 @@ public class AS4DBMS {
 					}
 					System.out.println(row);
 					System.out.println("-----Customer-----");
-					printCustomerInfo(connection, customerNum);
+					printCustomerInfo(conn, customerNum);
 					System.out.println(); //for order and customer spacing
 					count++;
 					row = "";
@@ -360,37 +323,25 @@ public class AS4DBMS {
 		}
 	}
 
-	/************************
-	 * METHOD: restockParts
-	 * @accessibility private
-	 * @param connection
-	 * @param pno
-	 * @param quantity
-	 */
-	private static void restockParts(Connection connection) {
+
+	private static void restockParts(Connection conn) {
 		try {
 			System.out.println("Please enter the unique part number: ");
 			String pno = scanner.next();
 			System.out.println("Please enter the quantity difference: ");
 			String quantity = scanner.next();
-			updateParts(connection, pno, quantity);
+			updateParts(conn, pno, quantity);
 		} catch(Exception e) {
 			System.out.println("\n!--- Error on restockParts(). " + e.getMessage());
 		}
 	}
 
-	/************************
-	 * METHOD: updateParts
-	 * @accessibility private
-	 * @param connection
-	 * @param pno
-	 * @param quantity
-	 */
-	private static void updateParts(Connection connection, String pno, String quantity) {
+
+	private static void updateParts(Connection conn, String pno, String quantity) {
 		try {
 			int quantityInt = (int) Integer.parseInt(quantity);
 			String sql = String.format("SELECT qoh FROM parts WHERE pno='%s'", pno);
-			Statement statement = connection.createStatement();
+			Statement statement = conn.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
 			rs = statement.executeQuery(sql);
 			if(getResultSetRowCount(rs) == 0) {
@@ -405,7 +356,7 @@ public class AS4DBMS {
 			int currentQuantityInt = (int) Integer.parseInt(currentQuantity);
 			quantityInt = currentQuantityInt + quantityInt;
 			sql = String.format("UPDATE parts SET qoh = '%s' WHERE pno='%s';", quantityInt, pno);
-			statement = connection.createStatement();
+			statement = conn.createStatement();
 			statement.executeUpdate(sql);
 		} catch(Exception e) {
 			System.out.println("\n!--- Error on restockParts(). " + e.getMessage());
