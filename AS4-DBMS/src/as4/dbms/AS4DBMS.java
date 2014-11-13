@@ -1,3 +1,7 @@
+/*  CREATED BY: Jordan Kidd
+    AS4: CS4430 - DBMS
+    DUE: Thursday, Nov 13 @ 11:59PM  */
+
 package as4.dbms;
 
 import java.sql.Connection;
