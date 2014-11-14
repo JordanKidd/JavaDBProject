@@ -22,8 +22,8 @@ public class AS4DBMS {
 
 	public static void main(String[] args) throws SQLException {
 
-		String user = "jordan";
-		String password = "";
+		String user = "root";
+		String password = "root";
 		Connection conn = null;
 
 		try {
