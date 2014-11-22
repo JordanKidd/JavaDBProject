@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="333.0" prefWidth="556.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxwfxml.WelcomeScreenController">
+  <children>
+    <MenuBar VBox.vgrow="NEVER">
+      <menus>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+                  <MenuItem mnemonicParsing="false" text="Open Customer Tool" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Preferences…" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem fx:id="closeMenuItem" mnemonicParsing="false" onAction="#closeWelcomePage" text="Quit" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Edit">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Undo" />
+            <MenuItem mnemonicParsing="false" text="Redo" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Cut" />
+            <MenuItem mnemonicParsing="false" text="Copy" />
+            <MenuItem mnemonicParsing="false" text="Paste" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+          <items>
+            <MenuItem fx:id="aboutMenuItem" mnemonicParsing="false" onAction="#launchAboutWindow" text="About" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="371.0" prefWidth="556.0" VBox.vgrow="ALWAYS">
+      <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="99.0" layoutY="58.0" prefHeight="53.0" prefWidth="358.0" text="Lots of Games, Inc." textAlignment="CENTER" textOverrun="CLIP">
+               <font>
+                  <Font size="36.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="0.9567307692307693" endY="0.9134615384615384" startY="0.11057692307692307">
+                     <stops>
+                        <Stop color="#1a4dff" />
+                        <Stop color="#1a4dff" offset="0.00749063670411985" />
+                        <Stop color="#3dffab" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+            <TextField fx:id="employeeIdTB" layoutX="245.0" layoutY="149.0" />
+            <PasswordField fx:id="employeePwTB" layoutX="245.0" layoutY="190.0" />
+            <Button id="loginButton" fx:id="loginButton" layoutX="321.0" layoutY="238.0" mnemonicParsing="false" onMouseClicked="#loginButtonClick" prefHeight="26.0" prefWidth="87.0" text="Login" />
+            <Label fx:id="employeeIdLabel" layoutX="149.0" layoutY="154.0" text="Employee ID:" />
+            <Label fx:id="employeePwLabel" layoutX="165.0" layoutY="195.0" text="Password:" />
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>
