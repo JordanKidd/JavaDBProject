@@ -54,16 +54,22 @@ public class WelcomeScreenController implements Initializable {
         try {
             dbs.employeeLogin(user, pw);
             System.out.println("!! - User credentials accepted! Now showing employee window.");
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("EmployeeWindow.fxml"));
+            Parent root = (Parent) loader.load();
+            EmployeeWindowController alertCont = (EmployeeWindowController) loader.getController();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+            
+            
         } catch (Exception ex1) {
             
             try {
-
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginWindowAlert.fxml"));
                 Parent root = (Parent) loader.load();
                 LoginAlertController alertCont = (LoginAlertController) loader.getController();
                 Stage stage = new Stage();
-                stage.setMaxWidth(460);
-                stage.setMaxHeight(170);
                 stage.setScene(new Scene(root));
                 alertCont.loginStage = stage;
                 stage.show();
@@ -84,8 +90,6 @@ public class WelcomeScreenController implements Initializable {
             CustomerWindowController cwCont = (CustomerWindowController) loader.getController();
             cwCont.dbs = this.dbs;
             Stage stage = new Stage();
-            stage.setMaxWidth(700);
-            stage.setMaxHeight(515);
             stage.centerOnScreen();
             stage.setTitle("Customer Tool");
             stage.setScene(new Scene(root));
@@ -105,8 +109,6 @@ public class WelcomeScreenController implements Initializable {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("AboutWindow.fxml"));
             Stage stage = new Stage();
-            stage.setMaxWidth(400);
-            stage.setMaxHeight(350);
             stage.setTitle("About");
             stage.setScene(new Scene(root));
             stage.show();

@@ -33,7 +33,7 @@ public class DatabaseService {
     }
     
     public void employeeLogin(String user, String pw) throws IOException {
-        throw new IOException("Oh snap!");
+        //throw new IOException("Oh snap!");
     }
     
     public void addGame() {
