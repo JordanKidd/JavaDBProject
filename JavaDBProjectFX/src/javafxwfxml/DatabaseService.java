@@ -5,6 +5,7 @@
  */
 package javafxwfxml;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
@@ -31,8 +32,8 @@ public class DatabaseService {
         }
     }
     
-    public void employeeLogin() {
-        
+    public void employeeLogin(String user, String pw) throws IOException {
+        throw new IOException("Oh snap!");
     }
     
     public void addGame() {

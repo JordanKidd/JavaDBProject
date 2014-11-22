@@ -48,7 +48,30 @@ public class WelcomeScreenController implements Initializable {
     
     @FXML
     private void loginButtonClick() {
-        System.out.println("login button clicked");
+        System.out.println("login button clicked"); 
+        String user = employeeIdTB.getText();
+        String pw = employeePwTB.getText();
+        try {
+            dbs.employeeLogin(user, pw);
+            System.out.println("!! - User credentials accepted! Now showing employee window.");
+        } catch (Exception ex1) {
+            
+            try {
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginWindowAlert.fxml"));
+                Parent root = (Parent) loader.load();
+                LoginAlertController alertCont = (LoginAlertController) loader.getController();
+                Stage stage = new Stage();
+                stage.setMaxWidth(460);
+                stage.setMaxHeight(170);
+                stage.setScene(new Scene(root));
+                alertCont.loginStage = stage;
+                stage.show();
+    
+            } catch (Exception ex2) {
+                System.out.println("Error on showing login failure window. " + ex2.getMessage());
+            }
+        }
     }
     
     @FXML
