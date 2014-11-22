@@ -22,10 +22,10 @@ public class JavaDBProject extends Application {
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("WelcomeScreen.fxml"));
         Scene scene = new Scene(root);
-        stage.setWidth(555);
-        stage.setHeight(400);
-        stage.setMaxWidth(555);
-        stage.setMaxHeight(400);
+        //stage.setWidth(555);
+        //stage.setHeight(400);
+        //stage.setMaxWidth(555);
+        //stage.setMaxHeight(400);
         stage.setScene(scene);
         stage.show();
     }

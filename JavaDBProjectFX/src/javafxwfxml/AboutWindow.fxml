@@ -16,8 +16,8 @@
                   <Font size="36.0" />
                </font>
             </Label>
-            <TextArea fx:id="aboutTextArea" editable="false" layoutX="100.0" layoutY="114.0" prefHeight="123.0" prefWidth="200.0" text="Created By:&#10;Jordan Kidd&#10;Andrew Burch&#10;&#10;CS4430&#10;Semester Project" wrapText="true" />
-            <Button fx:id="closeButton" layoutX="163.0" layoutY="270.0" mnemonicParsing="false" onMouseClicked="#closeAboutPage" prefHeight="26.0" prefWidth="75.0" text="Close" />
+            <TextArea fx:id="aboutTextArea" editable="false" layoutX="100.0" layoutY="114.0" prefHeight="123.0" prefWidth="200.0" text="-------------Created By------------&#10;                  Jordan Kidd&#10;                 Andrew Burch&#10;&#10;--------------CS4430----------------&#10;               Semester Project" wrapText="true" />
+            <Button fx:id="closeButton" layoutX="163.0" layoutY="271.0" mnemonicParsing="false" onMouseClicked="#closeAboutPage" prefHeight="26.0" prefWidth="75.0" text="Close" />
          </children>
     </AnchorPane>
   </children>
