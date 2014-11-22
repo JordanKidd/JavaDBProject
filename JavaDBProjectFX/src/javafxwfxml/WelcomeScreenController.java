@@ -26,6 +26,8 @@ import javafx.stage.Stage;
  */
 public class WelcomeScreenController implements Initializable {
     
+    private DatabaseService dbs;
+    
     @FXML
     private Button loginButton;
     @FXML
@@ -40,10 +42,38 @@ public class WelcomeScreenController implements Initializable {
     private Label employeeIdLabel;
     @FXML
     private Label employeePwLabel;
+    @FXML
+    private MenuItem customerMenuItem;
+    
     
     @FXML
     private void loginButtonClick() {
         System.out.println("login button clicked");
+    }
+    
+    @FXML
+    private void openCustomerWindow() {
+        System.out.println("Customer window load...");
+        
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("CustomerWindow.fxml"));
+            Parent root = (Parent) loader.load();
+            CustomerWindowController cwCont = (CustomerWindowController) loader.getController();
+            cwCont.dbs = this.dbs;
+            Stage stage = new Stage();
+            stage.setMaxWidth(700);
+            stage.setMaxHeight(515);
+            stage.centerOnScreen();
+            stage.setTitle("Customer Tool");
+            stage.setScene(new Scene(root));
+            
+            Stage customerStage = (Stage) loginButton.getScene().getWindow();
+            customerStage.hide();
+            
+            stage.show();
+        } catch (IOException e) {
+            System.out.println("error on customer window launch.");
+        }
     }
     
     @FXML
@@ -52,6 +82,8 @@ public class WelcomeScreenController implements Initializable {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("AboutWindow.fxml"));
             Stage stage = new Stage();
+            stage.setMaxWidth(400);
+            stage.setMaxHeight(350);
             stage.setTitle("About");
             stage.setScene(new Scene(root));
             stage.show();
@@ -69,6 +101,12 @@ public class WelcomeScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        System.out.println("Starting connection to the database....");
+        try {
+            dbs = new DatabaseService("jordan", "");
+        } catch (Exception ex) {
+            System.out.println("Error on connection to database and creation of service object! " + ex.getMessage());
+        }
     }    
     
 }

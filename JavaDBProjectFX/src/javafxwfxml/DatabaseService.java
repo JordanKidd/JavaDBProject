@@ -23,7 +23,9 @@ public class DatabaseService {
         //setup with db connect and stuff here
         try
         {
-            conn = DriverManager.getConnection(DB_URL, user, password);
+            this.user = user;
+            this.password = password;
+            this.conn = DriverManager.getConnection(DB_URL, user, password);
         } catch (Exception ex) {
             System.out.println("Error on DatabaseService init! " + ex.getMessage());
         }
