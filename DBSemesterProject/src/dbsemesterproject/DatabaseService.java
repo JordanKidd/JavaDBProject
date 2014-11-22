@@ -5,10 +5,82 @@
  */
 package dbsemesterproject;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+
 /**
  *
  * @author jordankidd
  */
 public class DatabaseService {
+    
+    private String user;
+    private String password;
+    private static final String DB_URL = "jdbc:mysql://localhost/dbproject";
+    private Connection conn;
+    
+    public DatabaseService(String user, String password) {
+        //setup with db connect and stuff here
+        try
+        {
+            conn = DriverManager.getConnection(DB_URL, user, password);
+        } catch (Exception ex) {
+            System.out.println("Error on DatabaseService init! " + ex.getMessage());
+        }
+    }
+    
+    public void employeeLogin() {
+        
+    }
+    
+    public void addGame() {
+        
+    }
+    
+    public void makePurchase() {
+        
+    }
+    
+    public void addDLC() {
+        
+    }
+    
+    public void addUpcoming() {
+        
+    }
+    
+    public void updateQty() {
+        
+    }
+    
+    public void addPlatform() {
+        
+    }
+    
+    public void updateCost(String title, String platform, float cost) {
+        
+    }
+    
+    public void customerSearchByTitle(String title) {
+        
+    }
+    
+    public void customerSearchByGenre(String genre) {
+        
+    }
+    
+    public void customerSearchByPlatform(String platform) {
+        
+    }
+    
+    public void viewUpcoming() {
+        
+    }
+    
+    public void reprintReceipt(String purchaseID) {
+        
+    }
+    
+    
     
 }
