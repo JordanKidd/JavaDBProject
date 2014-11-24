@@ -13,8 +13,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 /**
  *
@@ -23,6 +23,9 @@ import javafx.stage.Stage;
 public class CustomerWindowController implements Initializable {
     
     public DatabaseService dbs;
+    
+    @FXML
+    private TextArea resultsTextArea;
     
     @FXML
     private MenuItem quitMenuItem;
@@ -115,6 +118,14 @@ public class CustomerWindowController implements Initializable {
         platformComboBox.setValue("");
         minPrice.setValue(0);
         maxPrice.setValue(0);
+        resultsTextArea.setText("");
+    }
+    
+    @FXML
+    public void keepMinAlignedWithMax() {
+        if(minPrice.getValue() >  maxPrice.getValue()) {
+             minPrice.setValue(maxPrice.getValue());
+        }
     }
     
     @FXML
