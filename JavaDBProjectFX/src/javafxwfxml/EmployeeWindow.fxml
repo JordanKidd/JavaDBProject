@@ -7,17 +7,30 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxwfxml.EmployeeWindowController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
-            <MenuItem mnemonicParsing="false" text="Quit" />
+            <MenuItem fx:id="quitMenuItem" mnemonicParsing="false" onAction="#closeEmployeeWindow" text="Quit" />
           </items>
         </Menu>
       </menus>
     </MenuBar>
-    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="700.0" VBox.vgrow="ALWAYS" />
+    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="700.0" VBox.vgrow="ALWAYS">
+         <children>
+            <TextArea editable="false" layoutX="380.0" layoutY="64.0" prefHeight="417.0" prefWidth="284.0" promptText="Employee Changelog" text="1. add games&#10;2. upcoming to games&#10;3. make purchases&#10;4. add dlc&#10;5. add upcoming&#10;6. add qty&#10;7. add platform&#10;8. update cost&#10;---9. begin sale&#10;---10. stop sale" wrapText="true" />
+            <Label layoutX="380.0" layoutY="29.0" prefHeight="17.0" prefWidth="113.0" text="Changelog">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="executeButton" layoutX="72.0" layoutY="456.0" mnemonicParsing="false" onAction="#executeOnClick" prefHeight="25.0" prefWidth="113.0" text="Execute Changes" />
+            <Label layoutX="39.0" layoutY="34.0" text="Perform What Action:" />
+            <ComboBox fx:id="userActionChoice" layoutX="168.0" layoutY="30.0" onAction="#updateAction" prefHeight="25.0" prefWidth="166.0" promptText="Action To Perform" />
+            <Button fx:id="resetButton" layoutX="208.0" layoutY="456.0" mnemonicParsing="false" onAction="#resetOnClick" prefHeight="25.0" prefWidth="113.0" text="Reset Form" />
+            <Separator layoutX="27.0" layoutY="63.0" prefHeight="3.0" prefWidth="316.0" />
+         </children></AnchorPane>
   </children>
 </VBox>

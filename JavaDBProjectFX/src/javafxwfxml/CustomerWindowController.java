@@ -57,7 +57,6 @@ public class CustomerWindowController implements Initializable {
     //----------------------------------------------------------------
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //TODO
         genreComboBox.getItems().addAll(
                 "", //FOR NO SPECIFC GENRE
                 "Action",
@@ -74,7 +73,7 @@ public class CustomerWindowController implements Initializable {
         );
         
         platformComboBox.getItems().addAll(
-                "", //FOR NO SPECIFC GENRE
+                "", //FOR NO SPECIFC PLATFORM
                 "Super Nintendo",
                 "Gamecube",
                 "Wii",
@@ -130,7 +129,6 @@ public class CustomerWindowController implements Initializable {
     
     @FXML
     public void closeCustomerWindow() {
-        // get a handle to the stage
         System.out.println("Closing from customer window.");
         System.exit(0);
     }
