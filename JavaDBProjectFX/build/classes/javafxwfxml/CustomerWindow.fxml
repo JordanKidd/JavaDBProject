@@ -18,6 +18,22 @@
         </Menu>
       </menus>
     </MenuBar>
-    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="700.0" VBox.vgrow="ALWAYS" />
+    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="700.0" VBox.vgrow="ALWAYS">
+         <children>
+            <TextArea layoutX="383.0" layoutY="39.0" prefHeight="453.0" prefWidth="293.0" />
+            <Label layoutX="383.0" layoutY="8.0" prefHeight="17.0" prefWidth="136.0" text="Results:">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <TextField layoutX="95.0" layoutY="35.0" promptText="Title" />
+            <Label layoutX="22.0" layoutY="39.0" text="Game Title:" textAlignment="RIGHT" />
+            <ComboBox id="genreComboBox" fx:id="genreComboBox" layoutX="95.0" layoutY="81.0" onAction="#updateCurrentGenreChoice" prefWidth="150.0" promptText="Genre" />
+            <Label layoutX="48.0" layoutY="85.0" prefHeight="17.0" prefWidth="37.0" text="Genre:" />
+            <Button fx:id="searchButton" layoutX="95.0" layoutY="451.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#searchButtonClick" prefHeight="25.0" prefWidth="67.0" text="Search" />
+            <Button fx:id="resetButton" layoutX="178.0" layoutY="451.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#resetButtonClick" prefHeight="25.0" prefWidth="67.0" text="Reset" />
+            <ComboBox id="genreComboBox" fx:id="platformComboBox" layoutX="95.0" layoutY="130.0" onAction="#updateCurrentPlatformChoice" prefWidth="150.0" promptText="Platform" />
+            <Label layoutX="36.0" layoutY="134.0" prefHeight="17.0" prefWidth="49.0" text="Platform:" />
+         </children></AnchorPane>
   </children>
 </VBox>
