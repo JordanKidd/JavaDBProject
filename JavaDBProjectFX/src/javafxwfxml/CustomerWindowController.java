@@ -100,7 +100,12 @@ public class CustomerWindowController implements Initializable {
     
     @FXML
     public void searchButtonClick() {
-        System.out.println("Search clicked!");
+        System.out.println("!!-- Current values: ");
+        System.out.println("Title: " + titleTextField.getText());
+        System.out.println("Genre: " + currentGenre);
+        System.out.println("Platform: " + currentPlatform);
+        System.out.println("Min value: " + minPrice.getValue());
+        System.out.println("Max value: " + maxPrice.getValue());
     }
     
     @FXML
@@ -108,6 +113,8 @@ public class CustomerWindowController implements Initializable {
         titleTextField.setText("");
         genreComboBox.setValue("");
         platformComboBox.setValue("");
+        minPrice.setValue(0);
+        maxPrice.setValue(0);
     }
     
     @FXML
