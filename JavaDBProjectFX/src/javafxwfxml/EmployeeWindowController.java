@@ -21,9 +21,6 @@ import javafx.scene.control.TabPane;
  * @author Jordan
  */
 public class EmployeeWindowController implements Initializable {
-        
-    @FXML
-    private Group addGameGroup;
     
     @FXML
     private TabPane tabPane;
@@ -41,25 +38,23 @@ public class EmployeeWindowController implements Initializable {
    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //todo
-        actionToDo = tabPane.getSelectionModel().getSelectedItem().getText();
-        System.out.println("Will perform: " + actionToDo);
+        if (!tabPane.getSelectionModel().getSelectedItem().getText().equalsIgnoreCase(actionToDo)) {
+            actionToDo = tabPane.getSelectionModel().getSelectedItem().getText();
+            System.out.println("Will perform: " + actionToDo);
+        }
     }
     
     @FXML
     private void updateAction() {
-        actionToDo = tabPane.getSelectionModel().getSelectedItem().getText();
-        System.out.println("Will perform: " + actionToDo);
-    }
-    
-    private void resetToBlank() {
-        //reset form back to blank
+        if (!tabPane.getSelectionModel().getSelectedItem().getText().equalsIgnoreCase(actionToDo)) {
+            actionToDo = tabPane.getSelectionModel().getSelectedItem().getText();
+            System.out.println("Will perform: " + actionToDo);
+        }
     }
     
     @FXML
     private void resetOnClick() {
         System.out.println("reset click");
-        resetToBlank();
     }
     
     @FXML
@@ -79,20 +74,10 @@ public class EmployeeWindowController implements Initializable {
         
     }
     
-    private void showPurchase() {
-        System.out.println("Showing purchase");
-        addGameGroup.setVisible(false);
-    }
-    
     //------------------------------------------------
-    
+
     private void addGame() {
         
-    }
-    
-    private void showAddGame() {
-        System.out.println("Showing add game");
-        addGameGroup.setVisible(true);
     }
     
     //-------------------------------------------------
@@ -100,19 +85,11 @@ public class EmployeeWindowController implements Initializable {
     private void addUpcomingGame() {
         
     }
-    
-    private void showAddUpcomingGame() {
-        System.out.println("Showing add upcoming");
-    }
-    
+   
     //-------------------------------------------------
     
     private void addDLC() {
         
-    }
-    
-    private void showAddDLC() {
-        System.out.println("Showing add dlc");
     }
     
     //--------------------------------------------------
@@ -121,27 +98,16 @@ public class EmployeeWindowController implements Initializable {
         
     }
     
-    private void showRestockGame() {
-        System.out.println("Showing show restock");
-    }
-    
     //---------------------------------------------------
     
     private void addPlatform() {
         
     }
-    
-    private void showAddPlatform() {
-        System.out.println("Showing add platform");
-    }
-    
+ 
     //--------------------------------------------------
     
     private void updateGameCost() {
         
     }
-    
-    private void showUpdateGameCost() {
-        System.out.println("Showing update game cost");
-    }
+  
 }
