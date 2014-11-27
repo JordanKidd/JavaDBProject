@@ -21,100 +21,100 @@
     </MenuBar>
     <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="700.0" VBox.vgrow="ALWAYS">
          <children>
-            <TextArea editable="false" layoutX="449.0" layoutY="46.0" prefHeight="455.0" prefWidth="237.0" promptText="Employee Changelog" wrapText="true" />
-            <Label layoutX="511.0" layoutY="14.0" prefHeight="17.0" prefWidth="113.0" text="Changelog">
+            <TextArea fx:id="changelogTextArea" editable="false" layoutX="449.0" layoutY="46.0" prefHeight="455.0" prefWidth="237.0" promptText="Employee Changelog" wrapText="true" />
+            <Label fx:id="changelogLabel" layoutX="511.0" layoutY="14.0" prefHeight="17.0" prefWidth="113.0" text="Changelog">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
             <Button fx:id="executeButton" layoutX="75.0" layoutY="469.0" mnemonicParsing="false" onAction="#executeOnClick" prefHeight="25.0" prefWidth="113.0" text="Execute Changes" />
             <Button fx:id="resetButton" layoutX="210.0" layoutY="469.0" mnemonicParsing="false" onAction="#resetOnClick" prefHeight="25.0" prefWidth="113.0" text="Reset Form" />
-            <TabPane layoutX="14.0" layoutY="10.0" prefHeight="441.0" prefWidth="420.0">
+            <TabPane fx:id="tabGroup" layoutX="14.0" layoutY="10.0" prefHeight="441.0" prefWidth="420.0">
                <tabs>
                   <Tab fx:id="addGameTab" text="Add Game">
                      <content>
                         <AnchorPane>
                            <children>
-                              <ComboBox fx:id="addGameDayComboBox1" layoutX="181.0" layoutY="48.0" prefHeight="25.0" prefWidth="65.0" promptText="DD" />
-                              <ComboBox fx:id="addGameGenreComboBox1" layoutX="112.0" layoutY="120.0" prefWidth="150.0" promptText="Genre" />
-                              <Label fx:id="gameTitleLabel1" layoutX="14.0" layoutY="18.0" prefHeight="17.0" prefWidth="76.0" text="Game Title:" textOverrun="CLIP" />
-                              <ComboBox fx:id="addGameYearComboBox1" layoutX="250.0" layoutY="48.0" prefHeight="25.0" prefWidth="76.0" promptText="YYYY" />
+                              <ComboBox fx:id="addGameDayComboBox" layoutX="181.0" layoutY="48.0" prefHeight="25.0" prefWidth="65.0" promptText="DD" />
+                              <ComboBox fx:id="addGameGenreComboBox" layoutX="112.0" layoutY="120.0" prefWidth="150.0" promptText="Genre" />
+                              <Label fx:id="gameTitleLabel" layoutX="14.0" layoutY="18.0" prefHeight="17.0" prefWidth="76.0" text="Game Title:" textOverrun="CLIP" />
+                              <ComboBox fx:id="addGameYearComboBox" layoutX="250.0" layoutY="48.0" prefHeight="25.0" prefWidth="76.0" promptText="YYYY" />
                               <Label layoutX="14.0" layoutY="163.0" prefHeight="17.0" prefWidth="76.0" text="Platform" textAlignment="CENTER" textOverrun="CLIP" />
-                              <ComboBox fx:id="addGamePlatformComboBox1" layoutX="112.0" layoutY="159.0" prefWidth="150.0" promptText="Platform" />
+                              <ComboBox fx:id="addGamePlatformComboBox" layoutX="112.0" layoutY="159.0" prefWidth="150.0" promptText="Platform" />
                               <Label layoutX="14.0" layoutY="52.0" prefHeight="17.0" prefWidth="76.0" text="Release Date:" textAlignment="CENTER" textOverrun="CLIP" />
                               <Label layoutX="14.0" layoutY="88.0" prefHeight="17.0" prefWidth="76.0" text="Cost" textAlignment="CENTER" textOverrun="CLIP" />
-                              <ComboBox fx:id="addGameMonthComboBox1" layoutX="112.0" layoutY="48.0" prefHeight="25.0" prefWidth="65.0" promptText="MM" />
+                              <ComboBox fx:id="addGameMonthComboBox" layoutX="112.0" layoutY="48.0" prefHeight="25.0" prefWidth="65.0" promptText="MM" />
                               <Label layoutX="14.0" layoutY="124.0" prefHeight="17.0" prefWidth="76.0" text="Genre" textAlignment="CENTER" textOverrun="CLIP" />
-                              <ToggleButton fx:id="addGameIsMultToggleButton1" layoutX="135.0" layoutY="200.0" mnemonicParsing="false" text="Is Multiplayer?" />
+                              <ToggleButton fx:id="addGameIsMultToggleButton" layoutX="135.0" layoutY="200.0" mnemonicParsing="false" text="Is Multiplayer?" />
                               <TextField fx:id="addGameCostTextArea1" layoutX="113.0" layoutY="84.0" prefHeight="25.0" prefWidth="149.0" promptText="Cost" />
                               <TextField fx:id="addGameTitleTextArea1" layoutX="113.0" layoutY="14.0" promptText="Game Title" />
                            </children>
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab fx:id="addGameTab1" text="Add Upcoming">
+                  <Tab fx:id="addUpcomingTab" text="Add Upcoming">
                      <content>
                         <AnchorPane>
                            <children>
-                              <ComboBox fx:id="addGameDayComboBox11" layoutX="181.0" layoutY="48.0" prefHeight="25.0" prefWidth="65.0" promptText="DD" />
-                              <ComboBox fx:id="addGameGenreComboBox11" layoutX="112.0" layoutY="120.0" prefWidth="150.0" promptText="Genre Opt" />
+                              <ComboBox fx:id="addUpcomingDayComboBox" layoutX="181.0" layoutY="48.0" prefHeight="25.0" prefWidth="65.0" promptText="DD" />
+                              <ComboBox fx:id="addUpcomingGenreComboBox" layoutX="112.0" layoutY="120.0" prefWidth="150.0" promptText="Genre Opt" />
                               <Label fx:id="gameTitleLabel11" layoutX="14.0" layoutY="18.0" prefHeight="17.0" prefWidth="76.0" text="Game Title:" textOverrun="CLIP" />
-                              <ComboBox fx:id="addGameYearComboBox11" layoutX="250.0" layoutY="48.0" prefHeight="25.0" prefWidth="76.0" promptText="YYYY" />
+                              <ComboBox fx:id="addUpcomingYearComboBox" layoutX="250.0" layoutY="48.0" prefHeight="25.0" prefWidth="76.0" promptText="YYYY" />
                               <Label layoutX="14.0" layoutY="163.0" prefHeight="17.0" prefWidth="76.0" text="Platform" textAlignment="CENTER" textOverrun="CLIP" />
-                              <ComboBox fx:id="addGamePlatformComboBox11" layoutX="112.0" layoutY="159.0" prefWidth="150.0" promptText="Platform Opt" />
+                              <ComboBox fx:id="addUpcomingPlatComboBox" layoutX="112.0" layoutY="159.0" prefWidth="150.0" promptText="Platform Opt" />
                               <Label layoutX="14.0" layoutY="52.0" prefHeight="17.0" prefWidth="76.0" text="Release Date:" textAlignment="CENTER" textOverrun="CLIP" />
                               <Label layoutX="14.0" layoutY="88.0" prefHeight="17.0" prefWidth="76.0" text="Cost" textAlignment="CENTER" textOverrun="CLIP" />
-                              <ComboBox fx:id="addGameMonthComboBox11" layoutX="112.0" layoutY="48.0" prefHeight="25.0" prefWidth="65.0" promptText="MM" />
+                              <ComboBox fx:id="addUpcomingMonthComboBox" layoutX="112.0" layoutY="48.0" prefHeight="25.0" prefWidth="65.0" promptText="MM" />
                               <Label layoutX="14.0" layoutY="124.0" prefHeight="17.0" prefWidth="76.0" text="Genre" textAlignment="CENTER" textOverrun="CLIP" />
-                              <ToggleButton fx:id="addGameIsMultToggleButton11" layoutX="118.0" layoutY="201.0" mnemonicParsing="false" text="Is Multiplayer? (OPT)" />
-                              <TextField fx:id="addGameCostTextArea11" layoutX="113.0" layoutY="84.0" prefHeight="25.0" prefWidth="149.0" promptText="Cost Opt" />
-                              <TextField fx:id="addGameTitleTextArea11" layoutX="113.0" layoutY="14.0" promptText="Game Title" />
+                              <ToggleButton fx:id="addUpcomingIsdMultToggle" layoutX="118.0" layoutY="201.0" mnemonicParsing="false" text="Is Multiplayer? (OPT)" />
+                              <TextField fx:id="addUpcomingCostTextField" layoutX="113.0" layoutY="84.0" prefHeight="25.0" prefWidth="149.0" promptText="Cost Opt" />
+                              <TextField fx:id="addUpcomingTitleTextField" layoutX="113.0" layoutY="14.0" promptText="Game Title" />
                            </children>
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab fx:id="addGameTab12" text="DLC">
+                  <Tab fx:id="dlcTab" text="DLC">
                      <content>
                         <AnchorPane>
                            <children>
-                              <ComboBox fx:id="addGameDayComboBox112" layoutX="181.0" layoutY="48.0" prefHeight="25.0" prefWidth="65.0" promptText="DD" />
+                              <ComboBox fx:id="addDLCDayComboBox" layoutX="181.0" layoutY="48.0" prefHeight="25.0" prefWidth="65.0" promptText="DD" />
                               <Label fx:id="gameTitleLabel112" layoutX="14.0" layoutY="18.0" prefHeight="17.0" prefWidth="76.0" text="DLC Title:" textOverrun="CLIP" />
-                              <ComboBox fx:id="addGameYearComboBox112" layoutX="250.0" layoutY="48.0" prefHeight="25.0" prefWidth="76.0" promptText="YYYY" />
+                              <ComboBox fx:id="addDLCYearComboBox" layoutX="250.0" layoutY="48.0" prefHeight="25.0" prefWidth="76.0" promptText="YYYY" />
                               <Label layoutX="14.0" layoutY="122.0" prefHeight="17.0" prefWidth="76.0" text="Platform" textAlignment="CENTER" textOverrun="CLIP" />
-                              <ComboBox fx:id="addGamePlatformComboBox112" layoutX="112.0" layoutY="118.0" prefWidth="150.0" promptText="Platform" />
+                              <ComboBox fx:id="addDLCPlatformComboBox" layoutX="112.0" layoutY="118.0" prefWidth="150.0" promptText="Platform" />
                               <Label layoutX="14.0" layoutY="52.0" prefHeight="17.0" prefWidth="76.0" text="Release Date:" textAlignment="CENTER" textOverrun="CLIP" />
                               <Label layoutX="14.0" layoutY="88.0" prefHeight="17.0" prefWidth="76.0" text="Cost" textAlignment="CENTER" textOverrun="CLIP" />
-                              <ComboBox fx:id="addGameMonthComboBox112" layoutX="112.0" layoutY="48.0" prefHeight="25.0" prefWidth="65.0" promptText="MM" />
-                              <TextField fx:id="addGameCostTextArea112" layoutX="113.0" layoutY="84.0" prefHeight="25.0" prefWidth="149.0" promptText="Cost" />
-                              <TextField fx:id="addGameTitleTextArea112" layoutX="113.0" layoutY="14.0" promptText="DLC Title" />
+                              <ComboBox fx:id="addDLCMonthComboBox" layoutX="112.0" layoutY="48.0" prefHeight="25.0" prefWidth="65.0" promptText="MM" />
+                              <TextField fx:id="addDLCCostTextField" layoutX="113.0" layoutY="84.0" prefHeight="25.0" prefWidth="149.0" promptText="Cost" />
+                              <TextField fx:id="addDLCTitleTextField" layoutX="113.0" layoutY="14.0" promptText="DLC Title" />
                            </children>
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab fx:id="addGameTab11" text="Purchase">
+                  <Tab fx:id="purchaseTab" text="Purchase">
                      <content>
                         <AnchorPane>
                            <children>
                               <Label fx:id="gameTitleLabel111" layoutX="14.0" layoutY="18.0" prefHeight="17.0" prefWidth="76.0" text="Game Title:" textOverrun="CLIP" />
                               <Label layoutX="14.0" layoutY="52.0" prefHeight="17.0" prefWidth="76.0" text="Amount:" textAlignment="CENTER" textOverrun="CLIP" />
                               <Label layoutX="14.0" layoutY="88.0" prefHeight="17.0" prefWidth="76.0" text="Cost" textAlignment="CENTER" textOverrun="CLIP" />
-                              <ComboBox fx:id="addGameMonthComboBox111" layoutX="112.0" layoutY="48.0" prefHeight="25.0" prefWidth="65.0" promptText="MM" />
-                              <TextField fx:id="addGameCostTextArea111" layoutX="113.0" layoutY="84.0" prefHeight="25.0" prefWidth="149.0" promptText="Cost" />
-                              <TextField fx:id="addGameTitleTextArea111" layoutX="113.0" layoutY="14.0" promptText="Game Title" />
+                              <ComboBox fx:id="purchaseAmountComoboBox" layoutX="112.0" layoutY="48.0" prefHeight="25.0" prefWidth="65.0" promptText="MM" />
+                              <TextField fx:id="purchaseCostTextField" layoutX="113.0" layoutY="84.0" prefHeight="25.0" prefWidth="149.0" promptText="Cost" />
+                              <TextField fx:id="purchaseTitleTextField" layoutX="113.0" layoutY="14.0" promptText="Game Title" />
                            </children>
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab fx:id="addGameTab13" text="Restock Game">
+                  <Tab fx:id="restockGameTab" text="Restock Game">
                      <content>
                         <AnchorPane>
                            <children>
                               <Label fx:id="gameTitleLabel113" layoutX="14.0" layoutY="18.0" prefHeight="17.0" prefWidth="76.0" text="Game Title:" textOverrun="CLIP" />
                               <Label layoutX="14.0" layoutY="51.0" prefHeight="17.0" prefWidth="76.0" text="Platform:" textAlignment="CENTER" textOverrun="CLIP" />
-                              <ComboBox fx:id="addGamePlatformComboBox113" layoutX="112.0" layoutY="47.0" prefWidth="150.0" promptText="Platform" />
-                              <TextField fx:id="addGameTitleTextArea113" layoutX="113.0" layoutY="14.0" promptText="Game Title" />
+                              <ComboBox fx:id="restockPlatformComboBox" layoutX="112.0" layoutY="47.0" prefWidth="150.0" promptText="Platform" />
+                              <TextField fx:id="restockTitleTextField" layoutX="113.0" layoutY="14.0" promptText="Game Title" />
                               <Label layoutX="14.0" layoutY="84.0" prefHeight="17.0" prefWidth="68.0" text="Amount:" />
-                              <TextField layoutX="113.0" layoutY="80.0" promptText="Amount" />
+                              <TextField fx:id="restockAmountTextField" layoutX="113.0" layoutY="80.0" promptText="Amount" />
                            </children>
                         </AnchorPane>
                      </content>
@@ -123,28 +123,28 @@
                      <content>
                         <AnchorPane>
                            <children>
-                              <ComboBox fx:id="addGameDayComboBox114" layoutX="181.0" layoutY="48.0" prefHeight="25.0" prefWidth="65.0" promptText="DD" />
+                              <ComboBox fx:id="addPlatformDayComboBox" layoutX="181.0" layoutY="48.0" prefHeight="25.0" prefWidth="65.0" promptText="DD" />
                               <Label fx:id="gameTitleLabel114" layoutX="14.0" layoutY="18.0" prefHeight="17.0" prefWidth="100.0" text="Platform Name:" textOverrun="CLIP" />
-                              <ComboBox fx:id="addGameYearComboBox114" layoutX="250.0" layoutY="48.0" prefHeight="25.0" prefWidth="76.0" promptText="YYYY" />
+                              <ComboBox fx:id="addPlatformYearComboBox" layoutX="250.0" layoutY="48.0" prefHeight="25.0" prefWidth="76.0" promptText="YYYY" />
                               <Label layoutX="14.0" layoutY="52.0" prefHeight="17.0" prefWidth="76.0" text="Release Date:" textAlignment="CENTER" textOverrun="CLIP" />
-                              <Label layoutX="14.0" layoutY="88.0" prefHeight="17.0" prefWidth="76.0" text="Cost" textAlignment="CENTER" textOverrun="CLIP" />
-                              <ComboBox fx:id="addGameMonthComboBox114" layoutX="112.0" layoutY="48.0" prefHeight="25.0" prefWidth="65.0" promptText="MM" />
-                              <TextField fx:id="addGameCostTextArea114" layoutX="113.0" layoutY="84.0" prefHeight="25.0" prefWidth="149.0" promptText="Cost" />
-                              <TextField fx:id="addGameTitleTextArea114" layoutX="113.0" layoutY="14.0" promptText="Game Title" />
+                              <Label layoutX="14.0" layoutY="88.0" prefHeight="17.0" prefWidth="76.0" text="Abv:" textAlignment="CENTER" textOverrun="CLIP" />
+                              <ComboBox fx:id="addPlatformMonthComboBox" layoutX="112.0" layoutY="48.0" prefHeight="25.0" prefWidth="65.0" promptText="MM" />
+                              <TextField fx:id="addPlatformAbvTextField" layoutX="113.0" layoutY="84.0" prefHeight="25.0" prefWidth="149.0" promptText="Abv" />
+                              <TextField fx:id="addPlatformNameTextField" layoutX="113.0" layoutY="14.0" promptText="Platform Name" />
                            </children>
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab fx:id="addGameTab15" text="Adjust Price">
+                  <Tab fx:id="adjustPriceTab" text="Adjust Price">
                      <content>
                         <AnchorPane prefHeight="414.0" prefWidth="420.0">
                            <children>
                               <Label fx:id="gameTitleLabel115" layoutX="14.0" layoutY="18.0" prefHeight="17.0" prefWidth="76.0" text="Game Title:" textOverrun="CLIP" />
                               <Label layoutX="14.0" layoutY="91.0" prefHeight="17.0" prefWidth="76.0" text="Platform" textAlignment="CENTER" textOverrun="CLIP" />
-                              <ComboBox fx:id="addGamePlatformComboBox115" layoutX="113.0" layoutY="87.0" prefWidth="150.0" promptText="Platform" />
+                              <ComboBox fx:id="adjustPricePlatformComboBox" layoutX="113.0" layoutY="87.0" prefWidth="150.0" promptText="Platform" />
                               <Label layoutX="14.0" layoutY="53.0" prefHeight="17.0" prefWidth="76.0" text="Cost" textAlignment="CENTER" textOverrun="CLIP" />
-                              <TextField fx:id="addGameCostTextArea115" layoutX="113.0" layoutY="49.0" prefHeight="25.0" prefWidth="149.0" promptText="Updated Cost" />
-                              <TextField fx:id="addGameTitleTextArea115" layoutX="113.0" layoutY="14.0" promptText="Game Title" />
+                              <TextField fx:id="adjustPriceCostTextField" layoutX="113.0" layoutY="49.0" prefHeight="25.0" prefWidth="149.0" promptText="Updated Cost" />
+                              <TextField fx:id="adjustPriceTitleTextField" layoutX="113.0" layoutY="14.0" promptText="Game Title" />
                            </children>
                         </AnchorPane>
                      </content>
