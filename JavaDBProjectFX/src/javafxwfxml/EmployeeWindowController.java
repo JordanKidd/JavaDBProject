@@ -14,6 +14,7 @@ import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TabPane;
 
 /**
  *
@@ -25,7 +26,7 @@ public class EmployeeWindowController implements Initializable {
     private Group addGameGroup;
     
     @FXML
-    private ComboBox userActionChoice;
+    private TabPane tabPane;
     private String actionToDo;
 
     @FXML
@@ -41,13 +42,14 @@ public class EmployeeWindowController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //todo
-        
+        actionToDo = tabPane.getSelectionModel().getSelectedItem().getText();
+        System.out.println("Will perform: " + actionToDo);
     }
     
     @FXML
     private void updateAction() {
-        Object val = userActionChoice.getValue();
-        actionToDo = val.toString();
+        actionToDo = tabPane.getSelectionModel().getSelectedItem().getText();
+        System.out.println("Will perform: " + actionToDo);
     }
     
     private void resetToBlank() {

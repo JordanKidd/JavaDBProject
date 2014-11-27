@@ -29,9 +29,9 @@
             </Label>
             <Button fx:id="executeButton" layoutX="75.0" layoutY="469.0" mnemonicParsing="false" onAction="#executeOnClick" prefHeight="25.0" prefWidth="113.0" text="Execute Changes" />
             <Button fx:id="resetButton" layoutX="210.0" layoutY="469.0" mnemonicParsing="false" onAction="#resetOnClick" prefHeight="25.0" prefWidth="113.0" text="Reset Form" />
-            <TabPane fx:id="tabGroup" layoutX="14.0" layoutY="10.0" prefHeight="441.0" prefWidth="420.0">
+            <TabPane fx:id="tabPane" layoutX="14.0" layoutY="10.0" prefHeight="441.0" prefWidth="420.0">
                <tabs>
-                  <Tab fx:id="addGameTab" text="Add Game">
+                  <Tab fx:id="addGameTab" onSelectionChanged="#updateAction" text="Add Game">
                      <content>
                         <AnchorPane>
                            <children>
@@ -52,7 +52,7 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab fx:id="addUpcomingTab" text="Add Upcoming">
+                  <Tab fx:id="addUpcomingTab" onSelectionChanged="#updateAction" text="Add Upcoming">
                      <content>
                         <AnchorPane>
                            <children>
@@ -73,7 +73,7 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab fx:id="dlcTab" text="DLC">
+                  <Tab fx:id="dlcTab" onSelectionChanged="#updateAction" text="DLC">
                      <content>
                         <AnchorPane>
                            <children>
@@ -91,7 +91,7 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab fx:id="purchaseTab" text="Purchase">
+                  <Tab fx:id="purchaseTab" onSelectionChanged="#updateAction" text="Purchase">
                      <content>
                         <AnchorPane>
                            <children>
@@ -105,7 +105,7 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab fx:id="restockGameTab" text="Restock Game">
+                  <Tab fx:id="restockGameTab" onSelectionChanged="#updateAction" text="Restock Game">
                      <content>
                         <AnchorPane>
                            <children>
@@ -119,7 +119,7 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab fx:id="addGameTab14" text="Add Platform">
+                  <Tab fx:id="addPlatformTab" onSelectionChanged="#updateAction" text="Add Platform">
                      <content>
                         <AnchorPane>
                            <children>
@@ -135,7 +135,7 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab fx:id="adjustPriceTab" text="Adjust Price">
+                  <Tab fx:id="adjustPriceTab" onSelectionChanged="#updateAction" text="Adjust Price">
                      <content>
                         <AnchorPane prefHeight="414.0" prefWidth="420.0">
                            <children>
