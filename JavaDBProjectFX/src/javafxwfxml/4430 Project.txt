@@ -1,0 +1,42 @@
+Tables:
+1. games
+2. purchases
+3. purchase_items
+4. dlc
+5. upcoming
+6. platforms
+7. employee
+
+Column information (keys are defined with *'s):
+games(*title*, release, cost, genre, *platform*, multiplayer, qty)
+purchases(*unique auto #*, purchase_date)
+purchase_items(*purchase #*, qty, *title*, *platform*)
+dlc(*title*, *platform*, dlc_name, release, cost)
+upcoming(*title*, *platform*, cost (null), genre(null), multiplayer(null), release(null))
+platforms(*name abv*, system_name, released)
+employee(userid, password)
+
+Start screen:
+1. login employee
+2. customer search screen
+
+employee screen:
+1. add games
+2. upcoming to games
+3. make purchases
+4. add dlc
+5. add upcoming
+6. add qty
+7. add platform
+8. update cost
+---9. begin sale
+---10. stop sale
+
+customer screen:
+1. search by
+    -title
+    -genre
+    -platform
+2. view upcoming games
+    -order by date (closest first)
+---3. reprint receipt

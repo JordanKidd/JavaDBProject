@@ -10,6 +10,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
@@ -21,68 +22,32 @@ import javafx.scene.control.MenuItem;
 public class EmployeeWindowController implements Initializable {
         
     @FXML
+    private Group addGameGroup;
+    
+    @FXML
     private ComboBox userActionChoice;
     private String actionToDo;
 
-   @FXML
-   private Button executeButton;
+    @FXML
+    private Button executeButton;
    
-   @FXML
-   private Button resetButton;
+    @FXML
+    private Button resetButton;
    
-   @FXML
-   private MenuItem quitMenuItem;
+    @FXML
+    private MenuItem quitMenuItem;
     
    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //todo
-        userActionChoice.getItems().addAll(
-                "", //FOR NO SPECIFC ACTION, default
-                "Complete Purchase",
-                "Add Game",
-                "Add Upcoming Game",
-                "Add DLC",
-                "Restock Game",
-                "Add Platform",
-                "Update Game Cost"
-        );
+        
     }
     
     @FXML
     private void updateAction() {
         Object val = userActionChoice.getValue();
         actionToDo = val.toString();
-     
-        switch(actionToDo) {
-            case "":
-                resetToBlank();
-            break;
-            case "Complete Purchase":
-                showPurchase();
-            break;
-            case "Add Game":
-                showAddGame();
-            break;
-            case "Add Upcoming Game":
-                showAddUpcomingGame();
-            break;
-            case "Add DLC":
-                showAddDLC();
-            break;
-            case "Restock Game":
-                showRestockGame();
-            break;
-            case "Add Platform":
-                showAddPlatform();
-            break;
-            case "Update Game Cost":
-                showUpdateGameCost();
-            break;
-            default:
-                System.out.println("!!!!---- UNKNOWN EMPLOYEE ACTION!!!");
-            break;
-        }
     }
     
     private void resetToBlank() {
@@ -114,6 +79,7 @@ public class EmployeeWindowController implements Initializable {
     
     private void showPurchase() {
         System.out.println("Showing purchase");
+        addGameGroup.setVisible(false);
     }
     
     //------------------------------------------------
@@ -124,6 +90,7 @@ public class EmployeeWindowController implements Initializable {
     
     private void showAddGame() {
         System.out.println("Showing add game");
+        addGameGroup.setVisible(true);
     }
     
     //-------------------------------------------------
