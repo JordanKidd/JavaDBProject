@@ -12,13 +12,6 @@ CREATE TABLE employees (
     password        varchar(18)
 );
 
-/*platforms(*name abv*, system_name, released)*/
-create table platforms (
-    platform_abv    varchar(8) primary key,
-    platform_name   varchar(25),
-    released        date
-);
-
 /*games(*title*, release, cost, genre, *platform*, multiplayer, qty)*/
 create table games (
     game_title      varchar(30),
@@ -29,13 +22,20 @@ create table games (
     cost            decimal(4,2) not null,
     genre           varchar(18) not null,
     is_mult         char(1) not null,
-    qty             integer not null
+    qty             integer not null,
+);
+
+/*platforms(*name abv*, system_name, released)*/
+create table platforms (
+    platform_abv    varchar(8) primary key,
+    platform_name   varchar(25),
+    released        date
 );
 
 /*upcoming(*title*, *platform*, cost (null), genre(null), multiplayer(null), release(null))*/
 create table upcoming (
     game_title      varchar(30) primary key,
-    platform_abv        varchar(8),
+    platform        varchar(8),
     foreign key (platform_abv) references platforms(platform_abv),
     cost            DECIMAL(4,2),
     genre           varchar(18),
@@ -53,7 +53,7 @@ create table purchases (
 create table purchase_items (
     purchase_itemid     integer AUTO_INCREMENT primary key,
     purchase_id         integer,
-    foreign key(purchase_id) references purchases(purchase_id)
+    foreign key(purhchase_id) references purchases(purchase_id)
     
 );
 
@@ -63,7 +63,7 @@ create table dlc (
     platform_abv    varchar(8),
     foreign key (platform_abv) references platforms(platform_abv),
     foreign key (game_title) references games(game_title),
-    primary key(game_title, platform_abv),
+    primary key(title, platform_abv),
     dlc_title       varchar(30),
     released        date,
     cost            decimal(4,2)
