@@ -5,9 +5,11 @@
  */
 package javafxwfxml;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -17,23 +19,40 @@ public class DatabaseService {
     
     private String user;
     private String password;
-    private static final String DB_URL = "jdbc:mysql://localhost/dbproject";
+    private static final String DB_URL = "jdbc:mysql://localhost/VideoGameDB";
     private Connection conn;
     
     public DatabaseService(String user, String password) {
         //setup with db connect and stuff here
         try
         {
-            this.user = user;
-            this.password = password;
-            this.conn = DriverManager.getConnection(DB_URL, user, password);
+            this.user = "root";
+            this.password = "";
+            this.conn = DriverManager.getConnection(DB_URL, this.user, this.password);
         } catch (Exception ex) {
             System.out.println("Error on DatabaseService init! " + ex.getMessage());
         }
     }
     
-    public void employeeLogin(String user, String pw) throws IOException {
-        //throw new IOException("Oh snap!");
+	private static int getResultSetRowCount(ResultSet rs) {
+		int size = 0;
+		try {
+			rs.last();
+			size = rs.getRow();
+			rs.beforeFirst();
+		} catch(Exception e) {
+			return 0;
+		}
+		return size;
+	}
+    
+    public void employeeLogin(String user, String pw) throws SQLException {
+        String sql = String.format("SELECT * FROM employees WHERE employeeID='%s' AND password='%s';", user, pw);
+        Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        ResultSet rs = stmt.executeQuery(sql);
+        if(getResultSetRowCount(rs) != 1) {
+            throw new SQLException("ID not found.");
+        }
     }
     
     public void addGame() {
