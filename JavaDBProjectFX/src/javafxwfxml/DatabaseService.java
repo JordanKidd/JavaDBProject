@@ -51,12 +51,14 @@ public class DatabaseService {
         Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         ResultSet rs = stmt.executeQuery(sql);
         if(getResultSetRowCount(rs) != 1) {
-            throw new SQLException("ID not found.");
+            throw new SQLException("ID / PW combination not found.");
         }
     }
     
-    public void addGame() {
-        
+    public void addGame(String title, String date, String cost, String genre, String platform, boolean multiplayer) throws SQLException {
+        String sql = String.format("INSERT INTO games VALUES(%s,%s,%s,%s,%s);", title, date, cost, genre, platform, multiplayer);
+        Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        stmt.executeUpdate(sql);
     }
     
     public void makePurchase() {
@@ -75,8 +77,10 @@ public class DatabaseService {
         
     }
     
-    public void addPlatform() {
-        
+    public void addPlatform(String abv, String name, String date) throws SQLException {
+        String sql = String.format("INSERT INTO platforms VALUES(%s, %s,%s);", abv, name, date);
+        Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        stmt.executeUpdate(sql);
     }
     
     public void updateCost(String title, String platform, float cost) {
