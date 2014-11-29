@@ -14,17 +14,17 @@ CREATE TABLE employees (
 
 /*platforms(*name abv*, system_name, released)*/
 create table platforms (
-    platform_abv    varchar(8) primary key,
-    platform_name   varchar(25),
+    platform_name   varchar(50) primary key,
+    platform_abv    varchar(8),
     released        date
 );
 
 /*games(*title*, release, cost, genre, *platform*, multiplayer, qty)*/
 create table games (
-    game_title      varchar(30),
-    platform_abv    varchar(8),
-    foreign key (platform_abv) references platforms(platform_abv),
-    primary key(game_title, platform_abv),
+    game_title      varchar(45),
+    platform_name    varchar(50),
+    foreign key (platform_name) references platforms(platform_name),
+    primary key(game_title, platform_name),
     released        date not null,
     cost            decimal(4,2) not null,
     genre           varchar(18) not null,
@@ -34,9 +34,9 @@ create table games (
 
 /*upcoming(*title*, *platform*, cost (null), genre(null), multiplayer(null), release(null))*/
 create table upcoming (
-    game_title      varchar(30) primary key,
-    platform_abv        varchar(8),
-    foreign key (platform_abv) references platforms(platform_abv),
+    game_title      varchar(45) primary key,
+    platform_name   varchar(50),
+    foreign key (platform_name) references platforms(platform_name),
     cost            DECIMAL(4,2),
     genre           varchar(18),
     is_mult         char(1),
@@ -59,12 +59,12 @@ create table purchase_items (
 
 /*dlc(*title*, *platform*, dlc_name, release, cost)*/
 create table dlc (
-    game_title      varchar(30),
-    platform_abv    varchar(8),
-    foreign key (platform_abv) references platforms(platform_abv),
+    game_title      varchar(45),
+    platform_name    varchar(50),
+    foreign key (platform_name) references platforms(platform_name),
     foreign key (game_title) references games(game_title),
-    primary key(game_title, platform_abv),
-    dlc_title       varchar(30),
+    primary key(game_title, platform_name),
+    dlc_title       varchar(45),
     released        date,
     cost            decimal(4,2)
 );

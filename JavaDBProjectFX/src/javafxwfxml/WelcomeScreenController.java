@@ -57,7 +57,9 @@ public class WelcomeScreenController implements Initializable {
             
             FXMLLoader loader = new FXMLLoader(getClass().getResource("EmployeeWindow.fxml"));
             Parent root = (Parent) loader.load();
-            EmployeeWindowController alertCont = (EmployeeWindowController) loader.getController();
+            EmployeeWindowController empWindowCon = (EmployeeWindowController) loader.getController();
+            empWindowCon.dbs = dbs;
+            empWindowCon.setupPlatform();
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();

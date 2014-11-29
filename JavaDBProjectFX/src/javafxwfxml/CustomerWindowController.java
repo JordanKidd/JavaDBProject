@@ -58,33 +58,14 @@ public class CustomerWindowController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         genreComboBox.getItems().addAll(
-                "", //FOR NO SPECIFC GENRE
-                "Action",
-                "Adventure",
-                "Arcade",
-                "Educational",
-                "Indie",
-                "Puzzle",
-                "Role-Playing",
-                "MMORPG",
-                "Simulations",
-                "Sports",
-                "Strategy"
+                "Action", "Adventure", "Arcade",
+                "Educational", "Indie", "Other",
+                "Puzzle", "Role-Playing", "MMORPG",
+                "Simulations", "Sports", "Strategy"
         );
         
         platformComboBox.getItems().addAll(
-                "", //FOR NO SPECIFC PLATFORM
-                "Super Nintendo",
-                "Gamecube",
-                "Wii",
-                "Wii U",
-                "Playstation",
-                "Playstation 2",
-                "Playstation 3",
-                "Playstation 4",
-                "Xbox",
-                "Xbox 360",
-                "Xbox One"
+               //ENTER PLATFORM ITEMS HERE
         );
     }
     

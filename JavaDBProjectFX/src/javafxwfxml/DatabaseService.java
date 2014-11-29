@@ -61,7 +61,7 @@ public class DatabaseService {
         Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         stmt.executeUpdate(sql);
         } catch(Exception ex) {
-            
+            System.out.print("failed to add game");
         }
     }
     
@@ -82,8 +82,8 @@ public class DatabaseService {
     }
     
     public void addPlatform(String abv, String name, String date) throws SQLException {
-        String sql = String.format("INSERT INTO platforms VALUES(%s, %s,%s);", abv, name, date);
-        Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        String sql = String.format("INSERT INTO platforms VALUES(%s, %s,%s);", name, abv, date);
+        Statement stmt = conn.createStatement();
         stmt.executeUpdate(sql);
     }
     

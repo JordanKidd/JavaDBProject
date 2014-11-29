@@ -29,7 +29,7 @@ import javafx.scene.control.ToggleButton;
 public class EmployeeWindowController implements Initializable {
     
     //Various: -------------------------
-    private DatabaseService dbs;
+    public DatabaseService dbs;
      
     @FXML private TabPane tabPane;
     private String actionToDo;
@@ -57,12 +57,12 @@ public class EmployeeWindowController implements Initializable {
     @FXML private ComboBox addUpcomingPlatformComboBox;
     @FXML private ToggleButton addUpcomingIsMultToggleButton;
     
-    
-    
-    
-    
-    
-    
+    //Add platform: ---------------------
+    @FXML private TextField addPlatformNameTextField;
+    @FXML private ComboBox addPlatformMonthComboBox;
+    @FXML private ComboBox addPlatformDayComboBox;
+    @FXML private ComboBox addPlatformYearComboBox;
+    @FXML private TextField addPlatformAbvTextField;
     
     
     
@@ -82,10 +82,30 @@ public class EmployeeWindowController implements Initializable {
                 "October", "November", "December"
         );
         
+        addPlatformMonthComboBox.getItems().addAll(
+                "January", "Febuary", "March",
+                "April", "May", "June",
+                "July", "August", "September",
+                "October", "November", "December"
+        );
+        
+        addPlatformDayComboBox.getItems().addAll(
+                "1","2","3","4","5","6","7","8","9","10",
+                "11","12","13","14","15","16","17","18","19","20",
+                "21","22","23","24","25","26","27","28","29","30","31"
+        );
+        
         addGameDayComboBox.getItems().addAll(
                 "1","2","3","4","5","6","7","8","9","10",
                 "11","12","13","14","15","16","17","18","19","20",
                 "21","22","23","24","25","26","27","28","29","30","31"
+        );
+        
+        addPlatformYearComboBox.getItems().addAll(
+                "1980","1981","1982","1983","1984","1985","1986","1987","1988","1989",
+                "1990","1991","1992","1993","1994","1995","1996","1997","1998","1999",
+                "2000","2001","2002","2003","2004","2005","2006","2007","2008","2009",
+                "2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020"
         );
         
         addGameYearComboBox.getItems().addAll(
@@ -95,18 +115,12 @@ public class EmployeeWindowController implements Initializable {
                 "2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020"
         );
         
-        try {
-            Statement stmt = dbs.conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ResultSet rs = stmt.executeQuery("SELECT platform_abv FROM platforms;");
-            ArrayList list = new ArrayList();
-            int count = dbs.getResultSetRowCount(rs);
-            for(int i = 0; i < count; i++) {
-                list.add(rs.getString(i));
-            }
-            addGamePlatformComboBox.getItems().addAll(list);
-        } catch(Exception ex) {
-            System.out.println("error filling platforms");
-        }
+        addGameGenreComboBox.getItems().addAll(
+                "Action", "Adventure", "Arcade",
+                "Educational", "Indie", "Other",
+                "Puzzle", "Role-Playing", "MMORPG",
+                "Simulations", "Sports", "Strategy"
+        );
         
         //Upcoming:   ------------------
         addUpcomingDayComboBox.getItems().addAll(
@@ -131,12 +145,21 @@ public class EmployeeWindowController implements Initializable {
         
     }
     
-    public DatabaseService getDbs() {
-        return this.dbs;
-    }
-    
-    public void setDbs(DatabaseService database) {
-        this.dbs = database;
+    public void setupPlatform() {
+          try {
+            Statement stmt = dbs.conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT platform_name FROM platforms;");
+            ArrayList list = new ArrayList();
+            int count = dbs.getResultSetRowCount(rs);
+            int i = 0;
+            while (rs.next()) {
+				list.add(rs.getString(1));
+                i++;
+			}
+            addGamePlatformComboBox.getItems().addAll(list);
+        } catch(Exception ex) {
+            System.out.println("error filling platforms");
+        }
     }
     
     @FXML
@@ -167,7 +190,12 @@ public class EmployeeWindowController implements Initializable {
                             toggle
                 );
                 break;
-            case "1":
+            case "Add Platform":
+                 String platformDate = String.format("%s-%s-%s", 
+                         addPlatformYearComboBox.getSelectionModel().selectedItemProperty(),
+                         addPlatformMonthComboBox.getSelectionModel().selectedItemProperty(),
+                             addPlatformDayComboBox.getSelectionModel().selectedItemProperty());
+                dbs.addPlatform(addPlatformAbvTextField.getText(), addPlatformNameTextField.getText(), platformDate);
                 break;
             case "2":
                 break;
