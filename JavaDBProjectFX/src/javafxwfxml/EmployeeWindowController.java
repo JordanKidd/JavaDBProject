@@ -220,7 +220,7 @@ public class EmployeeWindowController implements Initializable {
                     addGameCostTextField.getText(),
                     addGameGenreComboBox.getValue().toString(),
                     addGamePlatformComboBox.getValue().toString(),
-                    addGameIsMultToggleButton.isPressed()
+                    addGameIsMultToggleButton.isSelected()
             );
         } catch (Exception ex) {
             System.out.println("Error in addGame(). " + ex.getMessage());

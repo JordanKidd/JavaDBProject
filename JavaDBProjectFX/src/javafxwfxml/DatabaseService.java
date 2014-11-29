@@ -74,7 +74,7 @@ public class DatabaseService {
         
     }
     
-    public void addDLC() {
+    public void addDLC(String gameName, String dlcName, String date, String cost, String platform) {
         
     }
     
