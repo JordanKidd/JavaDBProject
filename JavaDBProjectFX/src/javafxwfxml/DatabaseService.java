@@ -55,9 +55,14 @@ public class DatabaseService {
         }
     }
     
-    public void addGame(String title, String date, String cost, String genre, String platform, String multiplayer) throws SQLException {
+    public void addGame(String title, String date, String cost, String genre, String platform, boolean multiplayer) throws SQLException {
         try {
-             String sql = String.format("INSERT INTO games VALUES(%s,%s,%s,%s,%s);", title, date, cost, genre, platform, multiplayer);
+            String qty = "0";
+            String mult = "F";
+            if (multiplayer) {
+                mult = "T";
+            }
+            String sql = String.format("INSERT INTO games VALUES('%s','%s','%s','%s','%s','%s','%s');", title, platform, date, cost, genre, mult, qty);
         Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         stmt.executeUpdate(sql);
         } catch(Exception ex) {
@@ -82,7 +87,7 @@ public class DatabaseService {
     }
     
     public void addPlatform(String abv, String name, String date) throws SQLException {
-        String sql = String.format("INSERT INTO platforms VALUES(%s, %s,%s);", name, abv, date);
+        String sql = String.format("INSERT INTO platforms VALUES('%s','%s','%s');", name, abv, date);
         Statement stmt = conn.createStatement();
         stmt.executeUpdate(sql);
     }

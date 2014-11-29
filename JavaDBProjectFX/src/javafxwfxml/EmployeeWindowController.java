@@ -9,7 +9,6 @@ package javafxwfxml;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -38,11 +37,11 @@ public class EmployeeWindowController implements Initializable {
     @FXML private MenuItem quitMenuItem;
     
     //Add game: -------------------------
-    @FXML private TextField addGameTitleTextArea;
+    @FXML private TextField addGameTitleTextField;
     @FXML private ComboBox addGameMonthComboBox;
     @FXML private ComboBox addGameDayComboBox;
     @FXML private ComboBox addGameYearComboBox;
-    @FXML private TextField addGameCostTextArea;
+    @FXML private TextField addGameCostTextField;
     @FXML private ComboBox addGameGenreComboBox;
     @FXML private ComboBox addGamePlatformComboBox;
     @FXML private ToggleButton addGameIsMultToggleButton;
@@ -67,54 +66,42 @@ public class EmployeeWindowController implements Initializable {
     
     
     
-    //////////////////////////////////////////////////////
+    //  INIT  ////////////////////////////////////////////////////
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if (!tabPane.getSelectionModel().getSelectedItem().getText().equalsIgnoreCase(actionToDo)) {
             actionToDo = tabPane.getSelectionModel().getSelectedItem().getText();
             System.out.println("Will perform: " + actionToDo);
         }
-        
+        // Add Game Items:   ////////////////////////////////////
         addGameMonthComboBox.getItems().addAll(
-                "January", "Febuary", "March",
-                "April", "May", "June",
-                "July", "August", "September",
-                "October", "November", "December"
+               "1","2","3","4","5","6","7","8","9","10","11","12"
         );
-        
         addPlatformMonthComboBox.getItems().addAll(
-                "January", "Febuary", "March",
-                "April", "May", "June",
-                "July", "August", "September",
-                "October", "November", "December"
+               "1","2","3","4","5","6","7","8","9","10","11","12"
         );
-        
         addPlatformDayComboBox.getItems().addAll(
                 "1","2","3","4","5","6","7","8","9","10",
                 "11","12","13","14","15","16","17","18","19","20",
                 "21","22","23","24","25","26","27","28","29","30","31"
         );
-        
         addGameDayComboBox.getItems().addAll(
                 "1","2","3","4","5","6","7","8","9","10",
                 "11","12","13","14","15","16","17","18","19","20",
                 "21","22","23","24","25","26","27","28","29","30","31"
         );
-        
         addPlatformYearComboBox.getItems().addAll(
                 "1980","1981","1982","1983","1984","1985","1986","1987","1988","1989",
                 "1990","1991","1992","1993","1994","1995","1996","1997","1998","1999",
                 "2000","2001","2002","2003","2004","2005","2006","2007","2008","2009",
                 "2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020"
         );
-        
         addGameYearComboBox.getItems().addAll(
                 "1980","1981","1982","1983","1984","1985","1986","1987","1988","1989",
                 "1990","1991","1992","1993","1994","1995","1996","1997","1998","1999",
                 "2000","2001","2002","2003","2004","2005","2006","2007","2008","2009",
                 "2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020"
         );
-        
         addGameGenreComboBox.getItems().addAll(
                 "Action", "Adventure", "Arcade",
                 "Educational", "Indie", "Other",
@@ -122,28 +109,22 @@ public class EmployeeWindowController implements Initializable {
                 "Simulations", "Sports", "Strategy"
         );
         
-        //Upcoming:   ------------------
+        //Upcoming:   //////////////////////////////////////////
         addUpcomingDayComboBox.getItems().addAll(
                 "1","2","3","4","5","6","7","8","9","10",
                 "11","12","13","14","15","16","17","18","19","20",
                 "21","22","23","24","25","26","27","28","29","30","31"
         );
-        
         addUpcomingMonthComboBox.getItems().addAll(
-                "January", "Febuary", "March",
-                "April", "May", "June",
-                "July", "August", "September",
-                "October", "November", "December"
+                "1","2","3","4","5","6","7","8","9","10","11","12"
         );
-        
         addUpcomingYearComboBox.getItems().addAll(
                 "1980","1981","1982","1983","1984","1985","1986","1987","1988","1989",
                 "1990","1991","1992","1993","1994","1995","1996","1997","1998","1999",
                 "2000","2001","2002","2003","2004","2005","2006","2007","2008","2009",
                 "2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020"
         );
-        
-    }
+    } //  END INIT  ///////////////////////////////////////////
     
     public void setupPlatform() {
           try {
@@ -176,26 +157,15 @@ public class EmployeeWindowController implements Initializable {
     }
     
     @FXML
-    private void executeOnClick() throws IOException, SQLException {
+    private void executeOnClick() throws IOException {
         
         switch (actionToDo) {
             case "Add Game":
-                String date = String.format("%s-%s-%s", addGameYearComboBox.getSelectionModel().selectedItemProperty(),addGameMonthComboBox.getSelectionModel().selectedItemProperty(),addGameDayComboBox.getSelectionModel().selectedItemProperty());
-                String toggle = String.valueOf(addGameIsMultToggleButton.isPressed());
-                dbs.addGame(addGameTitleTextArea.getText(),
-                            addGameMonthComboBox.getSelectionModel().selectedItemProperty().toString(), 
-                            date,
-                            addGameCostTextArea.getText(),
-                            addGamePlatformComboBox.getSelectionModel().selectedItemProperty().toString(),
-                            toggle
-                );
+                setupPlatform();
+                addGame();
                 break;
             case "Add Platform":
-                 String platformDate = String.format("%s-%s-%s", 
-                         addPlatformYearComboBox.getSelectionModel().selectedItemProperty(),
-                         addPlatformMonthComboBox.getSelectionModel().selectedItemProperty(),
-                             addPlatformDayComboBox.getSelectionModel().selectedItemProperty());
-                dbs.addPlatform(addPlatformAbvTextField.getText(), addPlatformNameTextField.getText(), platformDate);
+                 addPlatform();
                 break;
             case "2":
                 break;
@@ -225,43 +195,87 @@ public class EmployeeWindowController implements Initializable {
     //-----------------------------------------------
     
     private void completePurchase() {
-        
+        try {
+            
+        } catch (Exception ex) {
+            System.out.println("Error in restockGame(). " + ex.getMessage());
+        }
     }
     
     //------------------------------------------------
 
     private void addGame() {
-        
+        try {
+            String date = String.format("%s-%s-%s", 
+                    addGameYearComboBox.getValue().toString(),
+                    addGameMonthComboBox.getValue().toString(),
+                    addGameDayComboBox.getValue().toString()
+            );
+            dbs.addGame(
+                    addGameTitleTextField.getText(),
+                    date,
+                    addGameCostTextField.getText(),
+                    addGameGenreComboBox.getValue().toString(),
+                    addGamePlatformComboBox.getValue().toString(),
+                    addGameIsMultToggleButton.isPressed()
+            );
+        } catch (Exception ex) {
+            System.out.println("Error in addGame(). " + ex.getMessage());
+        }
     }
     
     //-------------------------------------------------
     
     private void addUpcomingGame() {
-        
+        try {
+            
+        } catch (Exception ex) {
+            System.out.println("Error in restockGame(). " + ex.getMessage());
+        }
     }
    
     //-------------------------------------------------
     
     private void addDLC() {
-        
+        try {
+            
+        } catch (Exception ex) {
+            System.out.println("Error in restockGame(). " + ex.getMessage());
+        }
     }
     
     //--------------------------------------------------
     
     private void restockGame() {
-        
+        try {
+            
+        } catch (Exception ex) {
+            System.out.println("Error in restockGame(). " + ex.getMessage());
+        }
     }
     
     //---------------------------------------------------
     
     private void addPlatform() {
-        
+        try {
+            String platformDate = String.format("%s-%s-%s", 
+                    addPlatformYearComboBox.getValue().toString(),
+                    addPlatformMonthComboBox.getValue().toString(),
+                    addPlatformDayComboBox.getValue().toString());
+            dbs.addPlatform(addPlatformAbvTextField.getText(), addPlatformNameTextField.getText(), platformDate);
+        } catch (Exception ex){
+            System.out.println("Error in addPlatform(). " + ex.getMessage());
+        }
     }
  
     //--------------------------------------------------
     
     private void updateGameCost() {
-        
+        try {
+            
+        } catch (Exception ex) {
+            System.out.println("Error in restockGame(). " + ex.getMessage());
+        }
     }
   
 }
