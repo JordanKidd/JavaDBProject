@@ -63,7 +63,7 @@ public class DatabaseService {
                 mult = "T";
             }
             String sql = String.format("INSERT INTO games VALUES('%s','%s','%s','%s','%s','%s','%s');", title, platform, date, cost, genre, mult, qty);
-        Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        Statement stmt = conn.createStatement();
         stmt.executeUpdate(sql);
         } catch(Exception ex) {
             System.out.print("failed to add game");

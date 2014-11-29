@@ -59,7 +59,7 @@ public class WelcomeScreenController implements Initializable {
             Parent root = (Parent) loader.load();
             EmployeeWindowController empWindowCon = (EmployeeWindowController) loader.getController();
             empWindowCon.dbs = dbs;
-            empWindowCon.setupPlatform();
+            empWindowCon.setupPlatforms();
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
@@ -77,7 +77,7 @@ public class WelcomeScreenController implements Initializable {
                 stage.show();
     
             } catch (Exception ex2) {
-                System.out.println("Error on showing login failure window. " + ex2.getMessage());
+                System.out.println("Error on showing login window alert. " + ex2.getMessage());
             }
         }
     }

@@ -126,20 +126,23 @@ public class EmployeeWindowController implements Initializable {
         );
     } //  END INIT  ///////////////////////////////////////////
     
-    public void setupPlatform() {
-          try {
-            Statement stmt = dbs.conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT platform_name FROM platforms;");
-            ArrayList list = new ArrayList();
-            int count = dbs.getResultSetRowCount(rs);
-            int i = 0;
-            while (rs.next()) {
-				list.add(rs.getString(1));
-                i++;
-			}
-            addGamePlatformComboBox.getItems().addAll(list);
-        } catch(Exception ex) {
-            System.out.println("error filling platforms");
+    public void setupPlatforms() {
+        if(dbs != null) {
+            try {
+                Statement stmt = dbs.conn.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT platform_name FROM platforms;");
+                ArrayList list = new ArrayList();
+                int count = dbs.getResultSetRowCount(rs);
+                int i = 0;
+                while (rs.next()) {
+                    list.add(rs.getString(1));
+                    i++;
+                }
+                addGamePlatformComboBox.getItems().clear();
+                addGamePlatformComboBox.getItems().addAll(list);
+            } catch(Exception ex) {
+                System.out.println("error filling platforms");
+            }
         }
     }
     
@@ -148,6 +151,7 @@ public class EmployeeWindowController implements Initializable {
         if (!tabPane.getSelectionModel().getSelectedItem().getText().equalsIgnoreCase(actionToDo)) {
             actionToDo = tabPane.getSelectionModel().getSelectedItem().getText();
             System.out.println("Will perform: " + actionToDo);
+            setupPlatforms();
         }
     }
     
@@ -161,7 +165,6 @@ public class EmployeeWindowController implements Initializable {
         
         switch (actionToDo) {
             case "Add Game":
-                setupPlatform();
                 addGame();
                 break;
             case "Add Platform":
