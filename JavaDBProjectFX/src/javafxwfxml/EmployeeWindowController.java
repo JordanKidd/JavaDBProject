@@ -115,6 +115,14 @@ public class EmployeeWindowController implements Initializable {
         
     }
     
+    public DatabaseService getDbs() {
+        return this.dbs;
+    }
+    
+    public void setDbs(DatabaseService database) {
+        this.dbs = database;
+    }
+    
     @FXML
     private void updateAction() {
         if (!tabPane.getSelectionModel().getSelectedItem().getText().equalsIgnoreCase(actionToDo)) {
@@ -133,7 +141,9 @@ public class EmployeeWindowController implements Initializable {
         
         switch (actionToDo) {
             case "Add Game":
-                dbs.addGame(actionToDo, actionToDo, actionToDo, actionToDo, actionToDo, true);
+                //String date = String.format("%s-%s-%s", addGameYearComboBox.getSelectionModel().selectedItemProperty(),,);
+                //dbs.addGame(addGameTitleTextArea.getText(), actionToDo, actionToDo,
+                //            actionToDo, actionToDo, true);
                 break;
             case "1":
                 break;

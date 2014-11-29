@@ -22,7 +22,7 @@ import javafx.scene.control.TextField;
  */
 public class CustomerWindowController implements Initializable {
     
-    public DatabaseService dbs;
+    private DatabaseService dbs;
     
     @FXML
     private TextArea resultsTextArea;
@@ -86,6 +86,14 @@ public class CustomerWindowController implements Initializable {
                 "Xbox 360",
                 "Xbox One"
         );
+    }
+    
+    public DatabaseService getDbs() {
+        return this.dbs;
+    }
+    
+    public void setDbs(DatabaseService database) {
+        this.dbs = database;
     }
     
     @FXML

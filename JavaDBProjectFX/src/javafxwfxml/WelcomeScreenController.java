@@ -88,7 +88,7 @@ public class WelcomeScreenController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("CustomerWindow.fxml"));
             Parent root = (Parent) loader.load();
             CustomerWindowController cwCont = (CustomerWindowController) loader.getController();
-            cwCont.dbs = this.dbs;
+            cwCont.setDbs(dbs);
             Stage stage = new Stage();
             stage.centerOnScreen();
             stage.setTitle("Customer Tool");
