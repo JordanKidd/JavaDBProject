@@ -8,6 +8,10 @@ package javafxwfxml;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -91,6 +95,19 @@ public class EmployeeWindowController implements Initializable {
                 "2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020"
         );
         
+        try {
+            Statement stmt = dbs.conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = stmt.executeQuery("SELECT platform_abv FROM platforms;");
+            ArrayList list = new ArrayList();
+            int count = dbs.getResultSetRowCount(rs);
+            for(int i = 0; i < count; i++) {
+                list.add(rs.getString(i));
+            }
+            addGamePlatformComboBox.getItems().addAll(list);
+        } catch(Exception ex) {
+            System.out.println("error filling platforms");
+        }
+        
         //Upcoming:   ------------------
         addUpcomingDayComboBox.getItems().addAll(
                 "1","2","3","4","5","6","7","8","9","10",
@@ -111,7 +128,6 @@ public class EmployeeWindowController implements Initializable {
                 "2000","2001","2002","2003","2004","2005","2006","2007","2008","2009",
                 "2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020"
         );
-        
         
     }
     
@@ -137,13 +153,19 @@ public class EmployeeWindowController implements Initializable {
     }
     
     @FXML
-    private void executeOnClick() throws IOException {
+    private void executeOnClick() throws IOException, SQLException {
         
         switch (actionToDo) {
             case "Add Game":
-                //String date = String.format("%s-%s-%s", addGameYearComboBox.getSelectionModel().selectedItemProperty(),,);
-                //dbs.addGame(addGameTitleTextArea.getText(), actionToDo, actionToDo,
-                //            actionToDo, actionToDo, true);
+                String date = String.format("%s-%s-%s", addGameYearComboBox.getSelectionModel().selectedItemProperty(),addGameMonthComboBox.getSelectionModel().selectedItemProperty(),addGameDayComboBox.getSelectionModel().selectedItemProperty());
+                String toggle = String.valueOf(addGameIsMultToggleButton.isPressed());
+                dbs.addGame(addGameTitleTextArea.getText(),
+                            addGameMonthComboBox.getSelectionModel().selectedItemProperty().toString(), 
+                            date,
+                            addGameCostTextArea.getText(),
+                            addGamePlatformComboBox.getSelectionModel().selectedItemProperty().toString(),
+                            toggle
+                );
                 break;
             case "1":
                 break;

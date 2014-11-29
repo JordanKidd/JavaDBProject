@@ -20,7 +20,7 @@ public class DatabaseService {
     private String user;
     private String password;
     private static final String DB_URL = "jdbc:mysql://localhost/VideoGameDB";
-    private Connection conn;
+    public Connection conn;
     
     public DatabaseService(String user, String password) {
         //setup with db connect and stuff here
@@ -34,7 +34,7 @@ public class DatabaseService {
         }
     }
     
-	private static int getResultSetRowCount(ResultSet rs) {
+	public int getResultSetRowCount(ResultSet rs) {
 		int size = 0;
 		try {
 			rs.last();
@@ -55,10 +55,14 @@ public class DatabaseService {
         }
     }
     
-    public void addGame(String title, String date, String cost, String genre, String platform, boolean multiplayer) throws SQLException {
-        String sql = String.format("INSERT INTO games VALUES(%s,%s,%s,%s,%s);", title, date, cost, genre, platform, multiplayer);
+    public void addGame(String title, String date, String cost, String genre, String platform, String multiplayer) throws SQLException {
+        try {
+             String sql = String.format("INSERT INTO games VALUES(%s,%s,%s,%s,%s);", title, date, cost, genre, platform, multiplayer);
         Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         stmt.executeUpdate(sql);
+        } catch(Exception ex) {
+            
+        }
     }
     
     public void makePurchase() {
