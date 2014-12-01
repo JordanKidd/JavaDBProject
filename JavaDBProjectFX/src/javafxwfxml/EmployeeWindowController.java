@@ -18,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 
@@ -35,6 +36,7 @@ public class EmployeeWindowController implements Initializable {
     @FXML private Button executeButton;
     @FXML private Button resetButton;
     @FXML private MenuItem quitMenuItem;
+    @FXML private TextArea changelogTextArea;
     
     //Add game: -------------------------
     @FXML private TextField addGameTitleTextField;
@@ -62,6 +64,13 @@ public class EmployeeWindowController implements Initializable {
     @FXML private ComboBox addPlatformDayComboBox;
     @FXML private ComboBox addPlatformYearComboBox;
     @FXML private TextField addPlatformAbvTextField;
+    
+    //Restock game: ---------------------
+    @FXML private TextField restockTitleTextField;
+    @FXML private ComboBox restockPlatformComboBox;
+    @FXML private TextField restockAmountTextField;
+    
+    
     
     
     
@@ -140,6 +149,8 @@ public class EmployeeWindowController implements Initializable {
                 }
                 addGamePlatformComboBox.getItems().clear();
                 addGamePlatformComboBox.getItems().addAll(list);
+                restockPlatformComboBox.getItems().clear();
+                restockPlatformComboBox.getItems().addAll(list);
             } catch(Exception ex) {
                 System.out.println("error filling platforms");
             }
@@ -170,7 +181,8 @@ public class EmployeeWindowController implements Initializable {
             case "Add Platform":
                  addPlatform();
                 break;
-            case "2":
+            case "Restock Game":
+                restockGame();
                 break;
             case "3":
                 break;
@@ -251,6 +263,20 @@ public class EmployeeWindowController implements Initializable {
     
     private void restockGame() {
         try {
+            String title = restockTitleTextField.getText();
+            String qty = restockAmountTextField.getText();
+            String platform = restockPlatformComboBox.getSelectionModel().getSelectedItem().toString();
+            
+            int result = dbs.updateQty(title, platform, qty);
+            if(result == 1) {
+                //success:
+                String oldText = changelogTextArea.getText();
+                changelogTextArea.setText(oldText + String.format("\nAdded %s copies of %s",qty, title));
+            } else {
+                String oldText = changelogTextArea.getText();
+                changelogTextArea.setText(oldText +"\nUpdate failed. Game not found.");
+            }
+           
             
         } catch (Exception ex) {
             System.out.println("Error in restockGame(). " + ex.getMessage());

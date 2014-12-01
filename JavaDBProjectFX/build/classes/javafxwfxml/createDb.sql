@@ -22,9 +22,9 @@ create table platforms (
 /*games(*title*, release, cost, genre, *platform*, multiplayer, qty)*/
 create table games (
     game_title      varchar(45),
-    platform_name    varchar(50),
+    platform_name   varchar(50),
     foreign key (platform_name) references platforms(platform_name),
-    primary key(game_title, platform_name),
+    primary key (game_title, platform_name),
     released        date not null,
     cost            decimal(4,2) not null,
     genre           varchar(18) not null,
@@ -53,17 +53,17 @@ create table purchases (
 create table purchase_items (
     purchase_itemid     integer AUTO_INCREMENT primary key,
     purchase_id         integer,
-    foreign key(purchase_id) references purchases(purchase_id)
+    foreign key (purchase_id) references purchases(purchase_id)
     
 );
 
 /*dlc(*title*, *platform*, dlc_name, release, cost)*/
 create table dlc (
     game_title      varchar(45),
-    platform_name    varchar(50),
+    platform_name   varchar(50),
     foreign key (platform_name) references platforms(platform_name),
     foreign key (game_title) references games(game_title),
-    primary key(game_title, platform_name),
+    primary key (game_title, platform_name),
     dlc_title       varchar(45),
     released        date,
     cost            decimal(4,2)

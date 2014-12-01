@@ -40,3 +40,25 @@ customer screen:
 2. view upcoming games
     -order by date (closest first)
 ---3. reprint receipt
+
+
+------ PROJECT REQUIREMENTS: --------------------------------------------------
+Dear all, 
+
+I got emails asking what the format of your project presentation shall be. 
+
+Basically you are free to show us whatever you think your project shines. 
+A suggested list may include: 
+
+1. background (purpose of your project, requirement, problem/challenge, 
+database design, etc.) 
+2. dbms software, tools, and languages used and why you choose them 
+3. show us your code 
+4. a demo of the code (required) 
+5. share with us your experience and what you have learned 
+
+You'll receive grade based on your project presentation. You do not need to 
+submit any report. 
+
+Dr. Li Yang 
+-------------------------------------------------------------------------------

@@ -82,8 +82,15 @@ public class DatabaseService {
         
     }
     
-    public void updateQty() {
-        
+    public int updateQty(String title, String platform, String qty) throws SQLException {
+        String sql = String.format("UPDATE games SET qty='%s' WHERE game_title='%s' AND platform_name='%s'", qty, title, platform);
+        Statement stmt = conn.createStatement();
+        int result = stmt.executeUpdate(sql);
+        if(result == 0) {
+            return 0;
+        } else {
+            return 1;
+        }
     }
     
     public void addPlatform(String abv, String name, String date) throws SQLException {
