@@ -273,14 +273,14 @@ public class EmployeeWindowController implements Initializable {
             String qty = restockAmountTextField.getText();
             String platform = restockPlatformComboBox.getSelectionModel().getSelectedItem().toString();
             
-            int result = dbs.updateQty(title, platform, qty);
+            int result = dbs.restockGame(title, platform, qty);
             if(result == 1) {
                 //success:
                 String oldText = changelogTextArea.getText();
-                changelogTextArea.setText(oldText + String.format("\nAdded %s copies of %s",qty, title));
+                changelogTextArea.setText(oldText + String.format("\nAdded %s copies of %s", qty, title));
             } else {
                 String oldText = changelogTextArea.getText();
-                changelogTextArea.setText(oldText +"\nQty update failed. Game not found.");
+                changelogTextArea.setText(oldText +"\nQty update failed. Game + platform not found.");
             }
            
             
@@ -319,7 +319,7 @@ public class EmployeeWindowController implements Initializable {
                 changelogTextArea.setText(oldText + String.format("\nCost of %s is now: %s", title, newCost));
             } else {
                 String oldText = changelogTextArea.getText();
-                changelogTextArea.setText(oldText +"\nCost update failed. Game not found.");
+                changelogTextArea.setText(oldText +"\nCost update failed. Game + platform not found.");
             }
              
         } catch (Exception ex) {

@@ -82,7 +82,7 @@ public class DatabaseService {
         
     }
     
-    public int updateQty(String title, String platform, String qty) throws SQLException {
+    public int restockGame(String title, String platform, String qty) throws SQLException {
         String sql = String.format("UPDATE games SET qty='%s' WHERE game_title='%s' AND platform_name='%s'", qty, title, platform);
         Statement stmt = conn.createStatement();
         int result = stmt.executeUpdate(sql);
