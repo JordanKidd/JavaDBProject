@@ -70,7 +70,10 @@ public class EmployeeWindowController implements Initializable {
     @FXML private ComboBox restockPlatformComboBox;
     @FXML private TextField restockAmountTextField;
     
-    
+    //Adjust Cost: ----------------------
+    @FXML private TextField adjustPriceTitleTextField;
+    @FXML private TextField adjustPriceCostTextField;
+    @FXML private ComboBox adjustPricePlatformComboBox;
     
     
     
@@ -151,6 +154,8 @@ public class EmployeeWindowController implements Initializable {
                 addGamePlatformComboBox.getItems().addAll(list);
                 restockPlatformComboBox.getItems().clear();
                 restockPlatformComboBox.getItems().addAll(list);
+                adjustPricePlatformComboBox.getItems().clear();
+                adjustPricePlatformComboBox.getItems().addAll(list);
             } catch(Exception ex) {
                 System.out.println("error filling platforms");
             }
@@ -184,7 +189,8 @@ public class EmployeeWindowController implements Initializable {
             case "Restock Game":
                 restockGame();
                 break;
-            case "3":
+            case "Adjust Price":
+                updateGameCost();
                 break;
             case "4":
                 break;
@@ -274,7 +280,7 @@ public class EmployeeWindowController implements Initializable {
                 changelogTextArea.setText(oldText + String.format("\nAdded %s copies of %s",qty, title));
             } else {
                 String oldText = changelogTextArea.getText();
-                changelogTextArea.setText(oldText +"\nUpdate failed. Game not found.");
+                changelogTextArea.setText(oldText +"\nQty update failed. Game not found.");
             }
            
             
@@ -301,7 +307,21 @@ public class EmployeeWindowController implements Initializable {
     
     private void updateGameCost() {
         try {
+            String title = adjustPriceTitleTextField.getText();
+            String platform = adjustPricePlatformComboBox.getSelectionModel().getSelectedItem().toString();
+            String newCost = adjustPriceCostTextField.getText();
             
+            int result = dbs.updateCost(title, platform, newCost);
+            
+             if(result == 1) {
+                //success:
+                String oldText = changelogTextArea.getText();
+                changelogTextArea.setText(oldText + String.format("\nCost of %s is now: %s", title, newCost));
+            } else {
+                String oldText = changelogTextArea.getText();
+                changelogTextArea.setText(oldText +"\nCost update failed. Game not found.");
+            }
+             
         } catch (Exception ex) {
             System.out.println("Error in restockGame(). " + ex.getMessage());
         }

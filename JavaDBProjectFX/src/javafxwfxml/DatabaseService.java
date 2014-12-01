@@ -99,8 +99,15 @@ public class DatabaseService {
         stmt.executeUpdate(sql);
     }
     
-    public void updateCost(String title, String platform, float cost) {
-        
+    public int updateCost(String title, String platform, String newCost) throws SQLException {
+        String sql = String.format("UPDATE games SET cost='%s' WHERE game_title='%s' AND platform_name='%s'", newCost, title, platform);
+        Statement stmt = conn.createStatement();
+        int result = stmt.executeUpdate(sql);
+        if(result == 0) {
+            return 0;
+        } else {
+            return 1;
+        }
     }
     
     public void customerSearchByTitle(String title) {
