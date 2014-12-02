@@ -49,11 +49,11 @@ public class EmployeeWindowController implements Initializable {
     @FXML private ToggleButton addGameIsMultToggleButton;
    
     //Add upcoming: ---------------------
-    @FXML private TextField addUpcomingTitleTextArea;
+    @FXML private TextField addUpcomingTitleTextField;
     @FXML private ComboBox addUpcomingMonthComboBox;
     @FXML private ComboBox addUpcomingDayComboBox;
     @FXML private ComboBox addUpcomingYearComboBox;
-    @FXML private TextField addUpcomingCostTextArea;
+    @FXML private TextField addUpcomingCostTextField;
     @FXML private ComboBox addUpcomingGenreComboBox;
     @FXML private ComboBox addUpcomingPlatformComboBox;
     @FXML private ToggleButton addUpcomingIsMultToggleButton;
@@ -83,8 +83,6 @@ public class EmployeeWindowController implements Initializable {
     @FXML private ComboBox addDLCYearComboBox;
     @FXML private TextField addDLCCostTextField;
     @FXML private ComboBox addDLCPlatformComboBox;
-    
-    
     
     
     
@@ -221,9 +219,11 @@ public class EmployeeWindowController implements Initializable {
             case "DLC":
                 addDLC();
                 break;
-            case "5":
+            case "Add Upcoming":
+                addUpcomingGame();
                 break;
-            case "6":
+            case "Purchase":
+                completePurchase();
                 break;
             default:
                 throw new IOException("Unknown input on tab switch!");
@@ -272,6 +272,31 @@ public class EmployeeWindowController implements Initializable {
     
     private void addUpcomingGame() {
         try {
+            String upcomingTitle = addUpcomingTitleTextField.getText();
+            Object month = addUpcomingMonthComboBox.getSelectionModel().getSelectedItem();
+            Object year = addUpcomingYearComboBox.getSelectionModel().getSelectedItem();
+            Object day = addUpcomingDayComboBox.getSelectionModel().getSelectedItem();
+            String date = "";
+            if(month != null && day != null && year != null) {
+                date = String.format("%s-%s-%s", year.toString(), month.toString(), day.toString());
+            }
+            
+            String cost = addUpcomingCostTextField.getText();
+            if(cost.equals("")) {
+                cost = "";
+            }
+            Object genre = addUpcomingGenreComboBox.getSelectionModel().getSelectedItem();
+            if(genre == null) {
+                genre = "";
+            }
+            Object platform = addUpcomingPlatformComboBox.getSelectionModel().getSelectedItem();
+            if(platform == null) {
+                platform = "";
+            }
+                    
+            boolean mult = addUpcomingIsMultToggleButton.isSelected();
+            
+            dbs.addUpcoming(upcomingTitle, date, cost, genre.toString(), platform.toString(), mult);
             
         } catch (Exception ex) {
             System.out.println("Error in addUpcomingGame(). " + ex.getMessage());

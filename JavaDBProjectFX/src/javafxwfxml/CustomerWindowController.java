@@ -112,7 +112,7 @@ public class CustomerWindowController implements Initializable {
     @FXML
     public void keepMinAlignedWithMax() {
         if(minPrice.getValue() >  maxPrice.getValue()) {
-             minPrice.setValue(maxPrice.getValue());
+            minPrice.setValue(maxPrice.getValue());
         }
     }
     

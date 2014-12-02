@@ -64,7 +64,6 @@ public class WelcomeScreenController implements Initializable {
             stage.setScene(new Scene(root));
             stage.show();
             
-            
         } catch (Exception ex1) {
             
             try {

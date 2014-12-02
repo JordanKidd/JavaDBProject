@@ -86,8 +86,19 @@ public class DatabaseService {
         }
     }
     
-    public void addUpcoming() {
-        
+    public int addUpcoming(String title, String date, String cost, String genre, String platform, boolean mult) throws SQLException {
+        String multStr = "F";
+        if (mult) {
+            multStr = "T";
+        }
+        String sql = String.format("INSERT INTO upcoming VALUES('%s','%s','%s','%s','%s','%s');",title,platform,cost,genre,multStr,date);
+        Statement stmt = conn.createStatement();
+        int result = stmt.executeUpdate(sql);
+        if(result == 0) {
+            return 0;
+        } else {
+            return 1;
+        }
     }
     
     public int restockGame(String title, String platform, String qty) throws SQLException {
