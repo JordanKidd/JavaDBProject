@@ -74,8 +74,16 @@ public class DatabaseService {
         
     }
     
-    public void addDLC(String gameName, String dlcName, String date, String cost, String platform) {
+    public int addDLC(String gameName, String dlcName, String date, String cost, String platform) throws SQLException {
         
+        String sql = String.format("INSERT INTO dlc VALUES('%s','%s','%s','%s','%s');", gameName, platform, dlcName, date, cost);
+        Statement stmt = conn.createStatement();
+        int result = stmt.executeUpdate(sql);
+        if(result == 0) {
+            return 0;
+        } else {
+            return 1;
+        }
     }
     
     public void addUpcoming() {

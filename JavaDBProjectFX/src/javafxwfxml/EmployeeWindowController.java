@@ -75,6 +75,16 @@ public class EmployeeWindowController implements Initializable {
     @FXML private TextField adjustPriceCostTextField;
     @FXML private ComboBox adjustPricePlatformComboBox;
     
+    //Add DLC: -------------------------
+    @FXML private TextField addDLCTitleTextField;
+    @FXML private TextField addDLCGameTextField;
+    @FXML private ComboBox addDLCMonthComboBox;
+    @FXML private ComboBox addDLCDayComboBox;
+    @FXML private ComboBox addDLCYearComboBox;
+    @FXML private TextField addDLCCostTextField;
+    @FXML private ComboBox addDLCPlatformComboBox;
+    
+    
     
     
     
@@ -92,7 +102,15 @@ public class EmployeeWindowController implements Initializable {
         addPlatformMonthComboBox.getItems().addAll(
                "1","2","3","4","5","6","7","8","9","10","11","12"
         );
+        addDLCMonthComboBox.getItems().addAll(
+                "1","2","3","4","5","6","7","8","9","10","11","12"
+        );
         addPlatformDayComboBox.getItems().addAll(
+                "1","2","3","4","5","6","7","8","9","10",
+                "11","12","13","14","15","16","17","18","19","20",
+                "21","22","23","24","25","26","27","28","29","30","31"
+        );
+        addDLCDayComboBox.getItems().addAll(
                 "1","2","3","4","5","6","7","8","9","10",
                 "11","12","13","14","15","16","17","18","19","20",
                 "21","22","23","24","25","26","27","28","29","30","31"
@@ -103,6 +121,12 @@ public class EmployeeWindowController implements Initializable {
                 "21","22","23","24","25","26","27","28","29","30","31"
         );
         addPlatformYearComboBox.getItems().addAll(
+                "1980","1981","1982","1983","1984","1985","1986","1987","1988","1989",
+                "1990","1991","1992","1993","1994","1995","1996","1997","1998","1999",
+                "2000","2001","2002","2003","2004","2005","2006","2007","2008","2009",
+                "2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020"
+        );
+        addDLCYearComboBox.getItems().addAll(
                 "1980","1981","1982","1983","1984","1985","1986","1987","1988","1989",
                 "1990","1991","1992","1993","1994","1995","1996","1997","1998","1999",
                 "2000","2001","2002","2003","2004","2005","2006","2007","2008","2009",
@@ -156,6 +180,8 @@ public class EmployeeWindowController implements Initializable {
                 restockPlatformComboBox.getItems().addAll(list);
                 adjustPricePlatformComboBox.getItems().clear();
                 adjustPricePlatformComboBox.getItems().addAll(list);
+                addDLCPlatformComboBox.getItems().clear();
+                addDLCPlatformComboBox.getItems().addAll(list);
             } catch(Exception ex) {
                 System.out.println("error filling platforms");
             }
@@ -192,18 +218,15 @@ public class EmployeeWindowController implements Initializable {
             case "Adjust Price":
                 updateGameCost();
                 break;
-            case "4":
+            case "DLC":
+                addDLC();
                 break;
             case "5":
                 break;
             case "6":
                 break;
-            case "7":
-                break;
-            case "8":
-                break;
             default:
-                throw new IOException("Unknown input");
+                throw new IOException("Unknown input on tab switch!");
         }
     }
     
@@ -251,7 +274,7 @@ public class EmployeeWindowController implements Initializable {
         try {
             
         } catch (Exception ex) {
-            System.out.println("Error in restockGame(). " + ex.getMessage());
+            System.out.println("Error in addUpcomingGame(). " + ex.getMessage());
         }
     }
    
@@ -259,9 +282,24 @@ public class EmployeeWindowController implements Initializable {
     
     private void addDLC() {
         try {
+            String dlcTitle = addDLCTitleTextField.getText();
+            String gamePair = addDLCGameTextField.getText();
+            String month = addDLCMonthComboBox.getSelectionModel().getSelectedItem().toString();
+            String day = addDLCDayComboBox.getSelectionModel().getSelectedItem().toString();
+            String year = addDLCYearComboBox.getSelectionModel().getSelectedItem().toString();
+            String date = String.format("%s-%s-%s", year, month, day);
+            String cost = addDLCCostTextField.getText();
+            String platform = addDLCPlatformComboBox.getSelectionModel().getSelectedItem().toString();
+            
+            dbs.addDLC(
+                    gamePair, 
+                    dlcTitle, 
+                    date, 
+                    cost, 
+                    platform);
             
         } catch (Exception ex) {
-            System.out.println("Error in restockGame(). " + ex.getMessage());
+            System.out.println("Error in addDLC(). " + ex.getMessage());
         }
     }
     
@@ -323,8 +361,8 @@ public class EmployeeWindowController implements Initializable {
             }
              
         } catch (Exception ex) {
-            System.out.println("Error in restockGame(). " + ex.getMessage());
+            System.out.println("Error in updateGameCost(). " + ex.getMessage());
         }
     }
-  
+    
 }
