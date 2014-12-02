@@ -28,6 +28,7 @@ public class EmployeeWindowController implements Initializable {
     
     //Various: -------------------------
     public DatabaseService dbs;
+    public String userId;
      
     @FXML private TabPane tabPane;
     private String actionToDo;
@@ -152,6 +153,13 @@ public class EmployeeWindowController implements Initializable {
                 "2000","2001","2002","2003","2004","2005","2006","2007","2008","2009",
                 "2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020"
         );
+        addUpcomingGenreComboBox.getItems().addAll(
+                "Action", "Adventure", "Arcade",
+                "Educational", "Indie", "Other",
+                "Puzzle", "Role-Playing", "MMORPG",
+                "Simulations", "Sports", "Strategy"
+        );
+        
     } //  END INIT  ///////////////////////////////////////////
     
     public void setupPlatforms() {
@@ -176,6 +184,7 @@ public class EmployeeWindowController implements Initializable {
                 addDLCPlatformComboBox.getItems().addAll(list);
                 addUpcomingPlatformComboBox.getItems().clear();
                 addUpcomingPlatformComboBox.getItems().addAll(list);
+                changelogTextArea.setText("Hello " + userId + ".\n");
             } catch(Exception ex) {
                 System.out.println("error filling platforms");
             }
@@ -229,16 +238,6 @@ public class EmployeeWindowController implements Initializable {
         System.exit(0);
     }
     
-    //-----------------------------------------------
-    
-    private void completePurchase() {
-        try {
-            
-        } catch (Exception ex) {
-            System.out.println("Error in restockGame(). " + ex.getMessage());
-        }
-    }
-    
     //------------------------------------------------
 
     private void addGame() {
@@ -248,7 +247,7 @@ public class EmployeeWindowController implements Initializable {
                     addGameMonthComboBox.getValue().toString(),
                     addGameDayComboBox.getValue().toString()
             );
-            dbs.addGame(
+            int result = dbs.addGame(
                     addGameTitleTextField.getText(),
                     date,
                     addGameCostTextField.getText(),
@@ -256,6 +255,14 @@ public class EmployeeWindowController implements Initializable {
                     addGamePlatformComboBox.getValue().toString(),
                     addGameIsMultToggleButton.isSelected()
             );
+            if(result == 1) {
+                //success:
+                String oldText = changelogTextArea.getText();
+                changelogTextArea.setText(oldText + String.format("\nAdded %s game for %s", addGameTitleTextField.getText(), addGamePlatformComboBox.getValue().toString()));
+            } else  {
+                String oldText = changelogTextArea.getText();
+                changelogTextArea.setText(oldText + String.format("\nFailed to add %s game!", addGameTitleTextField.getText()));
+            }
         } catch (Exception ex) {
             System.out.println("Error in addGame(). " + ex.getMessage());
         }
@@ -288,7 +295,16 @@ public class EmployeeWindowController implements Initializable {
                     
             boolean mult = addUpcomingIsMultToggleButton.isSelected();
             
-            dbs.addUpcoming(upcomingTitle, date, cost, genre.toString(), platform.toString(), mult);
+            int result = dbs.addUpcoming(upcomingTitle, date, cost, genre.toString(), platform.toString(), mult);
+            
+            if(result == 1) {
+                //success:
+                String oldText = changelogTextArea.getText();
+                changelogTextArea.setText(oldText + String.format("\nAdded upcoming %s for %s", upcomingTitle, platform));
+            } else {
+                String oldText = changelogTextArea.getText();
+                changelogTextArea.setText(oldText + String.format("\nFailed to add %s!", upcomingTitle));
+            }
             
         } catch (Exception ex) {
             System.out.println("Error in addUpcomingGame(). " + ex.getMessage());
@@ -308,12 +324,21 @@ public class EmployeeWindowController implements Initializable {
             String cost = addDLCCostTextField.getText();
             String platform = addDLCPlatformComboBox.getSelectionModel().getSelectedItem().toString();
             
-            dbs.addDLC(
+            int result = dbs.addDLC(
                     gamePair, 
                     dlcTitle, 
                     date, 
                     cost, 
                     platform);
+            
+            if(result == 1) {
+                //success:
+                String oldText = changelogTextArea.getText();
+                changelogTextArea.setText(oldText + String.format("\nAdded %s DLC for %s", dlcTitle, gamePair));
+            } else {
+                 String oldText = changelogTextArea.getText();
+                changelogTextArea.setText(oldText + String.format("\nFailed to add %s!", dlcTitle));
+            }
             
         } catch (Exception ex) {
             System.out.println("Error in addDLC(). " + ex.getMessage());
@@ -352,7 +377,17 @@ public class EmployeeWindowController implements Initializable {
                     addPlatformYearComboBox.getValue().toString(),
                     addPlatformMonthComboBox.getValue().toString(),
                     addPlatformDayComboBox.getValue().toString());
-            dbs.addPlatform(addPlatformAbvTextField.getText(), addPlatformNameTextField.getText(), platformDate);
+            int result = dbs.addPlatform(addPlatformAbvTextField.getText(), addPlatformNameTextField.getText(), platformDate);
+            
+            if(result == 1) {
+                //success:
+                String oldText = changelogTextArea.getText();
+                changelogTextArea.setText(oldText + String.format("\nAdded the %s (%s) platform.", addPlatformNameTextField.getText(), addPlatformAbvTextField.getText()));
+            } else {
+                String oldText = changelogTextArea.getText();
+                changelogTextArea.setText(oldText +"\nPlatform creation failed!");
+            }
+            
         } catch (Exception ex){
             System.out.println("Error in addPlatform(). " + ex.getMessage());
         }
@@ -368,7 +403,7 @@ public class EmployeeWindowController implements Initializable {
             
             int result = dbs.updateCost(title, platform, newCost);
             
-             if(result == 1) {
+            if(result == 1) {
                 //success:
                 String oldText = changelogTextArea.getText();
                 changelogTextArea.setText(oldText + String.format("\nCost of %s is now: %s", title, newCost));

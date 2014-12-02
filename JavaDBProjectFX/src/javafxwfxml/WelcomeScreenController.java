@@ -59,6 +59,7 @@ public class WelcomeScreenController implements Initializable {
             Parent root = (Parent) loader.load();
             EmployeeWindowController empWindowCon = (EmployeeWindowController) loader.getController();
             empWindowCon.dbs = dbs;
+            empWindowCon.userId = user;
             empWindowCon.setupPlatforms();
             Stage stage = new Stage();
             stage.setScene(new Scene(root));

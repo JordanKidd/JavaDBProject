@@ -56,19 +56,17 @@ public class DatabaseService {
         }
     }
     
-    public void addGame(String title, String date, String cost, String genre, String platform, boolean multiplayer) throws SQLException {
-        try {
-            String qty = "0";
-            String mult = "F";
-            if (multiplayer) {
-                mult = "T";
-            }
-            String sql = String.format("INSERT INTO games VALUES('%s','%s','%s','%s','%s','%s','%s');", title, platform, date, cost, genre, mult, qty);
-        Statement stmt = conn.createStatement();
-        stmt.executeUpdate(sql);
-        } catch(Exception ex) {
-            System.out.print("failed to add game");
+    public int addGame(String title, String date, String cost, String genre, String platform, boolean multiplayer) throws SQLException {
+
+        String qty = "0";
+        String mult = "F";
+        if (multiplayer) {
+            mult = "T";
         }
+        String sql = String.format("INSERT INTO games VALUES('%s','%s','%s','%s','%s','%s','%s');", title, platform, date, cost, genre, mult, qty);
+        Statement stmt = conn.createStatement();
+        return stmt.executeUpdate(sql);
+
     }
     
     public void makePurchase() {
@@ -79,12 +77,7 @@ public class DatabaseService {
         
         String sql = String.format("INSERT INTO dlc VALUES('%s','%s','%s','%s','%s');", gameName, platform, dlcName, date, cost);
         Statement stmt = conn.createStatement();
-        int result = stmt.executeUpdate(sql);
-        if(result == 0) {
-            return 0;
-        } else {
-            return 1;
-        }
+        return stmt.executeUpdate(sql);
     }
     
     public int addUpcoming(String title, String date, String cost, String genre, String platform, boolean mult) throws SQLException {
@@ -118,40 +111,25 @@ public class DatabaseService {
            st.setString(6, date);
         }
         
-        int result = st.executeUpdate();
-        if(result == 0) {
-            return 0;
-        } else {
-            return 1;
-        }
+        return st.executeUpdate();
     }
     
     public int restockGame(String title, String platform, String qty) throws SQLException {
         String sql = String.format("UPDATE games SET qty='%s' WHERE game_title='%s' AND platform_name='%s'", qty, title, platform);
         Statement stmt = conn.createStatement();
-        int result = stmt.executeUpdate(sql);
-        if(result == 0) {
-            return 0;
-        } else {
-            return 1;
-        }
+        return stmt.executeUpdate(sql);
     }
     
-    public void addPlatform(String abv, String name, String date) throws SQLException {
+    public int addPlatform(String abv, String name, String date) throws SQLException {
         String sql = String.format("INSERT INTO platforms VALUES('%s','%s','%s');", name, abv, date);
         Statement stmt = conn.createStatement();
-        stmt.executeUpdate(sql);
+        return stmt.executeUpdate(sql);
     }
     
     public int updateCost(String title, String platform, String newCost) throws SQLException {
         String sql = String.format("UPDATE games SET cost='%s' WHERE game_title='%s' AND platform_name='%s'", newCost, title, platform);
         Statement stmt = conn.createStatement();
-        int result = stmt.executeUpdate(sql);
-        if(result == 0) {
-            return 0;
-        } else {
-            return 1;
-        }
+        return stmt.executeUpdate(sql);
     }
     
     public void customerSearchByTitle(String title) {
@@ -169,11 +147,6 @@ public class DatabaseService {
     public void viewUpcoming() {
         
     }
-    
-    public void reprintReceipt(String purchaseID) {
-        
-    }
-    
-    
+
     
 }
