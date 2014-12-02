@@ -7,6 +7,7 @@ package javafxwfxml;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -91,9 +92,33 @@ public class DatabaseService {
         if (mult) {
             multStr = "T";
         }
-        String sql = String.format("INSERT INTO upcoming VALUES('%s','%s','%s','%s','%s','%s');",title,platform,cost,genre,multStr,date);
-        Statement stmt = conn.createStatement();
-        int result = stmt.executeUpdate(sql);
+        
+        String sql = "INSERT INTO upcoming VALUES(?,?,?,?,?,?);";
+        PreparedStatement st = conn.prepareStatement(sql);
+        st.setString(1, title);
+        st.setString(2, platform);
+        
+        if (cost.equals("")) {
+           st.setNull(3, java.sql.Types.DECIMAL);
+        } else {
+           st.setString(3, cost);
+        }
+        
+        if (genre.equals("")) {
+           st.setNull(4, java.sql.Types.VARCHAR);
+        } else {
+           st.setString(4, genre);
+        }
+         
+         st.setString(5, multStr);
+         
+        if (date.equals("")) {
+           st.setNull(6, java.sql.Types.DATE);
+        } else {
+           st.setString(6, date);
+        }
+        
+        int result = st.executeUpdate();
         if(result == 0) {
             return 0;
         } else {

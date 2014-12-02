@@ -14,9 +14,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -33,9 +31,6 @@ public class EmployeeWindowController implements Initializable {
      
     @FXML private TabPane tabPane;
     private String actionToDo;
-    @FXML private Button executeButton;
-    @FXML private Button resetButton;
-    @FXML private MenuItem quitMenuItem;
     @FXML private TextArea changelogTextArea;
     
     //Add game: -------------------------
@@ -83,7 +78,6 @@ public class EmployeeWindowController implements Initializable {
     @FXML private ComboBox addDLCYearComboBox;
     @FXML private TextField addDLCCostTextField;
     @FXML private ComboBox addDLCPlatformComboBox;
-    
     
     
     //  INIT  ////////////////////////////////////////////////////
@@ -180,6 +174,8 @@ public class EmployeeWindowController implements Initializable {
                 adjustPricePlatformComboBox.getItems().addAll(list);
                 addDLCPlatformComboBox.getItems().clear();
                 addDLCPlatformComboBox.getItems().addAll(list);
+                addUpcomingPlatformComboBox.getItems().clear();
+                addUpcomingPlatformComboBox.getItems().addAll(list);
             } catch(Exception ex) {
                 System.out.println("error filling platforms");
             }
@@ -221,9 +217,6 @@ public class EmployeeWindowController implements Initializable {
                 break;
             case "Add Upcoming":
                 addUpcomingGame();
-                break;
-            case "Purchase":
-                completePurchase();
                 break;
             default:
                 throw new IOException("Unknown input on tab switch!");
@@ -280,7 +273,6 @@ public class EmployeeWindowController implements Initializable {
             if(month != null && day != null && year != null) {
                 date = String.format("%s-%s-%s", year.toString(), month.toString(), day.toString());
             }
-            
             String cost = addUpcomingCostTextField.getText();
             if(cost.equals("")) {
                 cost = "";
