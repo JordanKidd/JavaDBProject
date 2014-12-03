@@ -6,7 +6,13 @@
 package javafxwfxml;
 
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -63,10 +69,27 @@ public class CustomerWindowController implements Initializable {
                 "Puzzle", "Role-Playing", "MMORPG",
                 "Simulations", "Sports", "Strategy"
         );
-        
-        platformComboBox.getItems().addAll(
-               //ENTER PLATFORM ITEMS HERE
-        );
+    }
+    
+    public void setupPlatforms() {
+        if(dbs != null) {
+            try {
+                Statement stmt = dbs.conn.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT platform_name FROM platforms;");
+                ArrayList list = new ArrayList();
+                int count = dbs.getResultSetRowCount(rs);
+                int i = 0;
+                while (rs.next()) {
+                    list.add(rs.getString(1));
+                    i++;
+                }
+                platformComboBox.getItems().clear();
+                platformComboBox.getItems().addAll(list);
+                
+            } catch(Exception ex) {
+                System.out.println("error filling platforms");
+            }
+        }
     }
     
     public DatabaseService getDbs() {
@@ -90,13 +113,50 @@ public class CustomerWindowController implements Initializable {
     }
     
     @FXML
-    public void searchButtonClick() {
+    public void searchButtonClick() throws SQLException {
         System.out.println("!!-- Current values: ");
         System.out.println("Title: " + titleTextField.getText());
         System.out.println("Genre: " + currentGenre);
         System.out.println("Platform: " + currentPlatform);
         System.out.println("Min value: " + minPrice.getValue());
         System.out.println("Max value: " + maxPrice.getValue());
+        updateResultsTextField();
+    }
+    
+    @FXML
+    public void updateResultsTextField() throws SQLException {
+    	if(titleTextField.getText().equals("") && currentGenre == null && currentPlatform == null) {
+    		resultsTextArea.setText("Invalid query!");
+    	} else {
+    		if(currentGenre == null) {
+    			currentGenre = "";
+    		}
+    		if(currentPlatform == null) {
+    			currentPlatform = "";
+    		}
+    		try {
+    			ResultSet rs = dbs.customerSearch(titleTextField.getText(), currentGenre, currentPlatform, minPrice.getValue(), maxPrice.getValue());
+        		ResultSetMetaData rsmd = rs.getMetaData();
+        		String str = "";
+        	    int columnsNumber = rsmd.getColumnCount();
+        	    int count = 0;
+        	    str = str + "+++++++++++++++++++++++++++\n";
+        	    while(rs.next()) {
+        	    	count++;
+        	    	str = str + "-------------------------------------\n";
+        	        for(int i = 1; i <= columnsNumber; i++) {
+        	            String columnValue = rs.getString(i);
+        	            str = str + "" + rsmd.getColumnName(i) + ": " + columnValue + "\n";
+        	        }
+        	        str = str + "-------------------------------------\n";
+        	    }
+        	    str = str + "+++++++++++++++++++++++++++\n";
+        	    str = "Number of entries: " + count + "\n" + str;
+        	    resultsTextArea.setText(str);
+    		} catch(NullPointerException e) {
+    			resultsTextArea.setText("Invalid query!");
+    		}
+    	}
     }
     
     @FXML
@@ -112,7 +172,7 @@ public class CustomerWindowController implements Initializable {
     @FXML
     public void keepMinAlignedWithMax() {
         if(minPrice.getValue() >  maxPrice.getValue()) {
-            minPrice.setValue(maxPrice.getValue());
+             minPrice.setValue(maxPrice.getValue());
         }
     }
     

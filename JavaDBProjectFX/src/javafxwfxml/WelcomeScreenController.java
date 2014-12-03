@@ -91,6 +91,7 @@ public class WelcomeScreenController implements Initializable {
             Parent root = (Parent) loader.load();
             CustomerWindowController cwCont = (CustomerWindowController) loader.getController();
             cwCont.setDbs(dbs);
+            cwCont.setupPlatforms();
             Stage stage = new Stage();
             stage.centerOnScreen();
             stage.setTitle("Customer Tool");
