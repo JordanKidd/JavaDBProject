@@ -27,39 +27,38 @@ import javafx.scene.control.TextField;
  * @author jordankidd
  */
 public class CustomerWindowController implements Initializable {
-    
+
     private DatabaseService dbs;
-    
+
     @FXML
     private TextArea resultsTextArea;
-    
+
     @FXML
     private MenuItem quitMenuItem;
-    
+
     @FXML
     private ComboBox genreComboBox;
     private String currentGenre;
-    
+
     @FXML
     private ComboBox platformComboBox;
     private String currentPlatform;
-    
+
     @FXML
     private Button searchButton;
-    
+
     @FXML
     private Button resetButton;
-    
+
     @FXML
     private TextField titleTextField;
-    
+
     @FXML
     private Slider minPrice;
-    
+
     @FXML
     private Slider maxPrice;
-    
-    
+
     //----------------------------------------------------------------
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -70,9 +69,9 @@ public class CustomerWindowController implements Initializable {
                 "Simulations", "Sports", "Strategy"
         );
     }
-    
+
     public void setupPlatforms() {
-        if(dbs != null) {
+        if (dbs != null) {
             try {
                 Statement stmt = dbs.conn.createStatement();
                 ResultSet rs = stmt.executeQuery("SELECT platform_name FROM platforms;");
@@ -85,33 +84,33 @@ public class CustomerWindowController implements Initializable {
                 }
                 platformComboBox.getItems().clear();
                 platformComboBox.getItems().addAll(list);
-                
-            } catch(Exception ex) {
+
+            } catch (Exception ex) {
                 System.out.println("error filling platforms");
             }
         }
     }
-    
+
     public DatabaseService getDbs() {
         return this.dbs;
     }
-    
+
     public void setDbs(DatabaseService database) {
         this.dbs = database;
     }
-    
+
     @FXML
     public void updateCurrentGenreChoice() {
         Object val = genreComboBox.getValue();
         currentGenre = val.toString();
     }
-    
+
     @FXML
     public void updateCurrentPlatformChoice() {
         Object val = platformComboBox.getValue();
         currentPlatform = val.toString();
     }
-    
+
     @FXML
     public void searchButtonClick() throws SQLException {
         System.out.println("!!-- Current values: ");
@@ -122,43 +121,43 @@ public class CustomerWindowController implements Initializable {
         System.out.println("Max value: " + maxPrice.getValue());
         updateResultsTextField();
     }
-    
+
     @FXML
     public void updateResultsTextField() throws SQLException {
-    	if(titleTextField.getText().equals("") && currentGenre == null && currentPlatform == null) {
-    		resultsTextArea.setText("Invalid query!");
-    	} else {
-    		if(currentGenre == null) {
-    			currentGenre = "";
-    		}
-    		if(currentPlatform == null) {
-    			currentPlatform = "";
-    		}
-    		try {
-    			ResultSet rs = dbs.customerSearch(titleTextField.getText(), currentGenre, currentPlatform, minPrice.getValue(), maxPrice.getValue());
-        		ResultSetMetaData rsmd = rs.getMetaData();
-        		String str = "";
-        	    int columnsNumber = rsmd.getColumnCount();
-        	    int count = 0;
-        	    str = str + "+++++++++++++++++++++++++++\n";
-        	    while(rs.next()) {
-        	    	count++;
-        	    	str = str + "-------------------------------------\n";
-        	        for(int i = 1; i <= columnsNumber; i++) {
-        	            String columnValue = rs.getString(i);
-        	            str = str + "" + rsmd.getColumnName(i) + ": " + columnValue + "\n";
-        	        }
-        	        str = str + "-------------------------------------\n";
-        	    }
-        	    str = str + "+++++++++++++++++++++++++++\n";
-        	    str = "Number of entries: " + count + "\n" + str;
-        	    resultsTextArea.setText(str);
-    		} catch(NullPointerException e) {
-    			resultsTextArea.setText("Invalid query!");
-    		}
-    	}
+        if (titleTextField.getText().equals("") && currentGenre == null && currentPlatform == null) {
+            resultsTextArea.setText("Invalid query!");
+        } else {
+            if (currentGenre == null) {
+                currentGenre = "";
+            }
+            if (currentPlatform == null) {
+                currentPlatform = "";
+            }
+            try {
+                ResultSet rs = dbs.customerSearch(titleTextField.getText(), currentGenre, currentPlatform, minPrice.getValue(), maxPrice.getValue());
+                ResultSetMetaData rsmd = rs.getMetaData();
+                String str = "";
+                int columnsNumber = rsmd.getColumnCount();
+                int count = 0;
+                str = str + "+++++++++++++++++++++++++++\n";
+                while (rs.next()) {
+                    count++;
+                    str = str + "-------------------------------------\n";
+                    for (int i = 1; i <= columnsNumber; i++) {
+                        String columnValue = rs.getString(i);
+                        str = str + "" + rsmd.getColumnName(i) + ": " + columnValue + "\n";
+                    }
+                    str = str + "-------------------------------------\n";
+                }
+                str = str + "+++++++++++++++++++++++++++\n";
+                str = "Number of entries: " + count + "\n" + str;
+                resultsTextArea.setText(str);
+            } catch (NullPointerException e) {
+                resultsTextArea.setText("Invalid query!");
+            }
+        }
     }
-    
+
     @FXML
     public void resetButtonClick() {
         titleTextField.setText("");
@@ -168,14 +167,14 @@ public class CustomerWindowController implements Initializable {
         maxPrice.setValue(0);
         resultsTextArea.setText("");
     }
-    
+
     @FXML
     public void keepMinAlignedWithMax() {
-        if(minPrice.getValue() >  maxPrice.getValue()) {
-             minPrice.setValue(maxPrice.getValue());
+        if (minPrice.getValue() > maxPrice.getValue()) {
+            minPrice.setValue(maxPrice.getValue());
         }
     }
-    
+
     @FXML
     public void closeCustomerWindow() {
         System.out.println("Closing from customer window.");

@@ -31,9 +31,9 @@
     </MenuBar>
     <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="390.0" prefWidth="570.0" VBox.vgrow="ALWAYS">
       <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="85.0" layoutY="32.0" prefHeight="70.0" prefWidth="387.0" text="Lots of Games, Inc." textAlignment="CENTER" textOverrun="CLIP">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="32.0" layoutY="28.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="493.0" text="Lots of Games, Inc." textAlignment="CENTER" textOverrun="CLIP">
                <font>
-                  <Font name="System Bold Italic" size="42.0" />
+                  <Font name="Arial Bold Italic" size="42.0" />
                </font>
                <textFill>
                   <LinearGradient endX="0.9567307692307693" endY="0.9134615384615384" startY="0.11057692307692307">
@@ -47,10 +47,10 @@
             </Label>
             <TextField fx:id="employeeIdTB" layoutX="374.0" layoutY="170.0" promptText="ID" />
             <PasswordField fx:id="employeePwTB" layoutX="374.0" layoutY="211.0" promptText="Password" />
-            <Button id="loginButton" fx:id="loginButton" defaultButton="true" layoutX="436.0" layoutY="266.0" mnemonicParsing="false" onMouseClicked="#loginButtonClick" prefHeight="26.0" prefWidth="87.0" text="Login" />
+            <Button id="loginButton" fx:id="loginButton" defaultButton="true" layoutX="450.0" layoutY="253.0" mnemonicParsing="false" onMouseClicked="#loginButtonClick" prefHeight="26.0" prefWidth="87.0" text="Login" />
             <Label fx:id="employeeIdLabel" layoutX="278.0" layoutY="175.0" text="Employee ID:" />
             <Label fx:id="employeePwLabel" layoutX="295.0" layoutY="215.0" text="Password:" />
-            <ImageView fitHeight="212.0" fitWidth="212.0" layoutX="28.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="239.0" fitWidth="235.0" layoutX="20.0" layoutY="120.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Controller-512.png" />
                </image>

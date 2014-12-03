@@ -20,15 +20,18 @@
     </MenuBar>
     <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="515.0" prefWidth="700.0" VBox.vgrow="ALWAYS">
          <children>
-            <TextField fx:id="titleTextField" layoutX="125.0" layoutY="39.0" promptText="Title" />
-            <ComboBox id="genreComboBox" fx:id="genreComboBox" layoutX="125.0" layoutY="87.0" onAction="#updateCurrentGenreChoice" prefWidth="150.0" promptText="Genre" />
-            <ComboBox id="genreComboBox" fx:id="platformComboBox" layoutX="125.0" layoutY="136.0" onAction="#updateCurrentPlatformChoice" prefWidth="150.0" promptText="Platform" />
-            <Label layoutX="14.0" layoutY="198.0" prefHeight="17.0" prefWidth="101.0" text="Price Minimum:" />
-            <Slider fx:id="minPrice" layoutX="125.0" layoutY="188.0" majorTickUnit="10.0" max="60.0" minorTickCount="0" onMouseReleased="#keepMinAlignedWithMax" prefHeight="38.0" prefWidth="150.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
-            <Slider fx:id="maxPrice" layoutX="125.0" layoutY="243.0" majorTickUnit="10.0" max="60.0" minorTickCount="0" onMouseReleased="#keepMinAlignedWithMax" prefHeight="38.0" prefWidth="150.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
-            <Button fx:id="searchButton" layoutX="125.0" layoutY="329.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#searchButtonClick" prefHeight="25.0" prefWidth="67.0" text="Search" />
-            <Button fx:id="resetButton" layoutX="207.0" layoutY="329.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#resetButtonClick" prefHeight="25.0" prefWidth="67.0" text="Reset" />
-            <TextArea fx:id="resultsTextArea" editable="false" layoutX="336.0" layoutY="40.0" prefHeight="452.0" prefWidth="340.0" promptText="Results will appear in this window, if items are found that match the search criteria." wrapText="true" />
+            <TextField fx:id="titleTextField" layoutX="133.0" layoutY="39.0" promptText="Title" />
+            <ComboBox id="genreComboBox" fx:id="genreComboBox" layoutX="133.0" layoutY="87.0" onAction="#updateCurrentGenreChoice" prefHeight="26.0" prefWidth="163.0" promptText="Genre" />
+            <ComboBox id="genreComboBox" fx:id="platformComboBox" layoutX="133.0" layoutY="136.0" onAction="#updateCurrentPlatformChoice" prefHeight="26.0" prefWidth="163.0" promptText="Platform" />
+            <Label layoutX="18.0" layoutY="191.0" prefHeight="17.0" prefWidth="114.0" text="Price Minimum:" />
+            <Slider fx:id="minPrice" layoutX="133.0" layoutY="188.0" majorTickUnit="10.0" max="60.0" minorTickCount="0" onMouseReleased="#keepMinAlignedWithMax" prefHeight="38.0" prefWidth="163.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+            <Slider fx:id="maxPrice" layoutX="133.0" layoutY="243.0" majorTickUnit="10.0" max="60.0" minorTickCount="0" onMouseReleased="#keepMinAlignedWithMax" prefHeight="38.0" prefWidth="163.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+            <Button fx:id="searchButton" layoutX="73.0" layoutY="329.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#searchButtonClick" prefHeight="25.0" prefWidth="76.0" text="Search" />
+            <Button fx:id="resetButton" layoutX="171.0" layoutY="329.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#resetButtonClick" prefHeight="25.0" prefWidth="76.0" text="Reset" />
+            <TextArea fx:id="resultsTextArea" editable="false" layoutX="336.0" layoutY="40.0" prefHeight="452.0" prefWidth="340.0" promptText="Results will appear in this window, if items are found that match the search criteria." wrapText="true">
+               <font>
+                  <Font name="Monospaced Regular" size="13.0" />
+               </font></TextArea>
             <Label layoutX="336.0" layoutY="14.0" prefHeight="17.0" prefWidth="136.0" text="Results:">
                <font>
                   <Font size="16.0" />
@@ -37,7 +40,7 @@
             <Label layoutX="29.0" layoutY="43.0" prefHeight="15.0" prefWidth="76.0" text="Game Title:" textAlignment="RIGHT" />
             <Label layoutX="48.0" layoutY="91.0" prefHeight="17.0" prefWidth="67.0" text="Genre:" />
             <Label layoutX="39.0" layoutY="140.0" prefHeight="17.0" prefWidth="76.0" text="Platform:" />
-            <Label layoutX="14.0" layoutY="253.0" prefHeight="17.0" prefWidth="118.0" text="Price Maximum:" />
+            <Label layoutX="17.0" layoutY="247.0" prefHeight="17.0" prefWidth="114.0" text="Price Maximum:" />
          </children></AnchorPane>
   </children>
 </VBox>
