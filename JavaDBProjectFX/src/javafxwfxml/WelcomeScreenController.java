@@ -62,6 +62,7 @@ public class WelcomeScreenController implements Initializable {
             empWindowCon.userId = user;
             empWindowCon.setupPlatforms();
             Stage stage = new Stage();
+            stage.setResizable(false);
             stage.setScene(new Scene(root));
             stage.show();
             
@@ -94,6 +95,7 @@ public class WelcomeScreenController implements Initializable {
             cwCont.setupPlatforms();
             Stage stage = new Stage();
             stage.centerOnScreen();
+            stage.setResizable(false);
             stage.setTitle("Customer Tool");
             stage.setScene(new Scene(root));
             

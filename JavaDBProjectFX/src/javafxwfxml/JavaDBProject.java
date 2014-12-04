@@ -23,6 +23,8 @@ public class JavaDBProject extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("WelcomeScreen.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setResizable(false);
+        stage.setTitle("CS4430 Project");
         stage.show();
     }
 

@@ -54,17 +54,17 @@ create table purchase_items (
     purchase_itemid     integer AUTO_INCREMENT primary key,
     purchase_id         integer,
     foreign key (purchase_id) references purchases(purchase_id)
-    
+
 );
 
 /*dlc(*title*, *platform*, dlc_name, release, cost)*/
-create table dlc (
-    game_title      varchar(45),
-    platform_name   varchar(50),
-    foreign key (platform_name) references platforms(platform_name),
-    foreign key (game_title) references games(game_title),
-    primary key (game_title, platform_name),
-    dlc_title       varchar(45),
-    released        date,
-    cost            decimal(4,2)
+CREATE TABLE dlc (
+    game_title      VARCHAR(45),
+    platform_name   VARCHAR(50),
+    FOREIGN KEY (platform_name) REFERENCES platforms(platform_name),
+    FOREIGN KEY (game_title) REFERENCES games(game_title),
+    dlc_title       VARCHAR(45),
+    PRIMARY KEY (game_title,platform_name,dlc_title),
+    released        DATE,
+    cost            DECIMAL(4,2)
 );

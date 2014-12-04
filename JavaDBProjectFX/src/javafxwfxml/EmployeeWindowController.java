@@ -298,6 +298,8 @@ public class EmployeeWindowController implements Initializable {
             }
         } catch (Exception ex) {
             System.out.println("Error in addGame(). " + ex.getMessage());
+            String oldText = changelogTextArea.getText();
+            changelogTextArea.setText(oldText + String.format("\nFailed to add %s game!", addGameTitleTextField.getText()));
         }
     }
 
@@ -340,6 +342,8 @@ public class EmployeeWindowController implements Initializable {
 
         } catch (Exception ex) {
             System.out.println("Error in addUpcomingGame(). " + ex.getMessage());
+            String oldText = changelogTextArea.getText();
+            changelogTextArea.setText(oldText + String.format("\nFailed to add %s!", addUpcomingTitleTextField.getText()));
         }
     }
 
@@ -368,11 +372,13 @@ public class EmployeeWindowController implements Initializable {
                 changelogTextArea.setText(oldText + String.format("\nAdded %s DLC for %s", dlcTitle, gamePair));
             } else {
                 String oldText = changelogTextArea.getText();
-                changelogTextArea.setText(oldText + String.format("\nFailed to add %s!", dlcTitle));
+                changelogTextArea.setText(oldText + String.format("\nFailed to add %s DLC!", dlcTitle));
             }
 
         } catch (Exception ex) {
             System.out.println("Error in addDLC(). " + ex.getMessage());
+            String oldText = changelogTextArea.getText();
+            changelogTextArea.setText(oldText + String.format("\nFailed to add %s DLC!", addDLCTitleTextField.getText()));
         }
     }
 
@@ -390,11 +396,13 @@ public class EmployeeWindowController implements Initializable {
                 changelogTextArea.setText(oldText + String.format("\nAdded %s copies of %s", qty, title));
             } else {
                 String oldText = changelogTextArea.getText();
-                changelogTextArea.setText(oldText + "\nQty update failed. Game + platform not found.");
+                changelogTextArea.setText(oldText + "\nQty update failed. Game / platform combo not found.");
             }
 
         } catch (Exception ex) {
             System.out.println("Error in restockGame(). " + ex.getMessage());
+            String oldText = changelogTextArea.getText();
+            changelogTextArea.setText(oldText + "\nQty update failed. Game / platform combo not found.");
         }
     }
 
@@ -418,6 +426,8 @@ public class EmployeeWindowController implements Initializable {
 
         } catch (Exception ex) {
             System.out.println("Error in addPlatform(). " + ex.getMessage());
+            String oldText = changelogTextArea.getText();
+            changelogTextArea.setText(oldText + "\nPlatform creation failed!");
         }
     }
 
@@ -436,11 +446,13 @@ public class EmployeeWindowController implements Initializable {
                 changelogTextArea.setText(oldText + String.format("\nCost of %s is now: %s", title, newCost));
             } else {
                 String oldText = changelogTextArea.getText();
-                changelogTextArea.setText(oldText + "\nCost update failed. Game + platform not found.");
+                changelogTextArea.setText(oldText + String.format("\nCost update for %s failed. Game / platform combo not found.", adjustPriceTitleTextField.getText()));
             }
 
         } catch (Exception ex) {
             System.out.println("Error in updateGameCost(). " + ex.getMessage());
+            String oldText = changelogTextArea.getText();
+            changelogTextArea.setText(oldText + String.format("\nCost update for %s failed. Game / platform combo not found.", adjustPriceTitleTextField.getText()));
         }
     }
 

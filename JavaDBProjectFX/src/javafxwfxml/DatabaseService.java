@@ -40,6 +40,7 @@ public class DatabaseService {
             rs.last();
             size = rs.getRow();
             rs.beforeFirst();
+            System.out.println();
         } catch (Exception e) {
             return 0;
         }
@@ -65,7 +66,6 @@ public class DatabaseService {
         String sql = String.format("INSERT INTO games VALUES('%s','%s','%s','%s','%s','%s','%s');", title, platform, date, cost, genre, mult, qty);
         Statement stmt = conn.createStatement();
         return stmt.executeUpdate(sql);
-
     }
 
     public int addDLC(String gameName, String dlcName, String date, String cost, String platform) throws SQLException {
@@ -130,19 +130,19 @@ public class DatabaseService {
     public ResultSet customerSearch(String title, String genre, String platform, double min, double max) throws SQLException {
         String sql = "SELECT * FROM games WHERE ";
         if ((!(title.equals(""))) && (!(genre.equals(""))) && (!(platform.equals("")))) {
-            sql = sql + String.format("game_title LIKE '%%%s%%' AND genre='%s' AND platform_name='%s' AND cost>'%f' AND cost<'%f';", title, genre, platform, min, max);
+            sql = sql + String.format("game_title LIKE '%%%s%%' AND genre='%s' AND platform_name='%s' AND cost>='%f' AND cost<='%f';", title, genre, platform, min, max);
         } else if ((!(title.equals(""))) && (!(genre.equals(""))) && platform.equals("")) {
-            sql = sql + String.format("game_title LIKE '%%%s%%' AND genre='%s' AND cost>'%f' AND cost<'%f';", title, genre, min, max);
+            sql = sql + String.format("game_title LIKE '%%%s%%' AND genre='%s' AND cost>='%f' AND cost<='%f';", title, genre, min, max);
         } else if ((!(title.equals(""))) && genre.equals("") && (!(platform.equals("")))) {
-            sql = sql + String.format("game_title LIKE ''%%%s%%' AND platform_name='%s' AND cost>'%f' AND cost<'%f';", title, platform, min, max);
+            sql = sql + String.format("game_title LIKE ''%%%s%%' AND platform_name='%s' AND cost>='%f' AND cost<='%f';", title, platform, min, max);
         } else if ((!(title.equals(""))) && genre.equals("") && platform.equals("")) {
-            sql = sql + String.format("game_title LIKE '%%%s%%' AND cost>'%f' AND cost<'%f';", title, min, max);
+            sql = sql + String.format("game_title LIKE '%%%s%%' AND cost>='%f' AND cost<='%f';", title, min, max);
         } else if (title.equals("") && (!(genre.equals(""))) && (!(platform.equals("")))) {
-            sql = sql + String.format("genre='%s' AND platform_name='%s' AND cost>'%f' AND cost<'%f';", genre, platform, min, max);
+            sql = sql + String.format("genre='%s' AND platform_name='%s' AND cost>='%f' AND cost<='%f';", genre, platform, min, max);
         } else if (title.equals("") && (!(genre.equals(""))) && platform.equals("")) {
-            sql = sql + String.format("genre='%s' AND cost>'%f' AND cost<'%f';", genre, min, max);
+            sql = sql + String.format("genre='%s' AND cost>='%f' AND cost<='%f';", genre, min, max);
         } else if (title.equals("") && genre.equals("") && (!(platform.equals("")))) {
-            sql = sql + String.format("platform_name='%s';", platform);
+            sql = sql + String.format("platform_name='%s' AND cost>='%f' AND cost<='%f';", platform, min, max);
         }
         System.out.println("SQL: " + sql);
         Statement stmt = conn.createStatement();

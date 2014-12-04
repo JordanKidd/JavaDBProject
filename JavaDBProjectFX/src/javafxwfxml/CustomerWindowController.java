@@ -68,6 +68,7 @@ public class CustomerWindowController implements Initializable {
                 "Puzzle", "Role-Playing", "MMORPG",
                 "Simulations", "Sports", "Strategy"
         );
+        maxPrice.setValue(60.0);
     }
 
     public void setupPlatforms() {
@@ -164,7 +165,7 @@ public class CustomerWindowController implements Initializable {
         genreComboBox.setValue("");
         platformComboBox.setValue("");
         minPrice.setValue(0);
-        maxPrice.setValue(0);
+        maxPrice.setValue(60.0);
         resultsTextArea.setText("");
     }
 
